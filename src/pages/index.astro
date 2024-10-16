@@ -1,29 +1,95 @@
 ---
 import LandingPLayout from '../layouts/LandingPLayout.astro'
+import Hero from '../components/Hero.astro'
 ---
 
 <LandingPLayout title="Test Vocacional">
 
+	<Hero />
+
+	<div class="w-full min-h-screen grid place-items-center ">
+		<section>
+			<!-- Container -->
+			<div class="mx-auto w-full max-w-screen-xl ">
+			<!-- Title -->
+			<h2 class="mb-8 text-3xl font-bold md:text-5xl "> Hola esto es psyence </h2>
+			<p class="mb-8 max-w-lg text-sm text-gray-500 sm:text-base "> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. </p>
+			<div class="grid gap-10 lg:grid-cols-2 lg:gap-12">
+				<img src="https://assets.website-files.com/6458c625291a94a195e6cf3a/64b7a30c42421ae3cbe5abb9_about%20image.svg" alt="" class="inline-block h-full w-full rounded-2xl object-cover" />
+				<div class="flex flex-col gap-5 rounded-2xl border border-solid border-black p-10 sm:p-20">
+				<h2 class="text-3xl font-bold md:text-5xl">Nuestra mision</h2>
+				<p class="text-sm text-gray-500 sm:text-base"> Aliquet risus feugiat in ante metus. Arcu dui vivamus arcu felis bibendum ut. Vestibulum lorem sed risus ultricies tristique nulla. Vitae et leo duis ut diam quam. Bibendum arcu vitae elementum curabitur vitae nunc. Dictumst vestibulum rhoncus est pellentesque. Lectus proin nibh nisl condimentum id. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
+					<br />
+					<br /> Massa id neque aliquam vestibulum morbi blandit. Nulla pellentesque dignissim enim sit amet venenatis.
+				</p>
+				</div>
+			</div>
+			</div>
+		</section>
+		
+		<section class="py-12">
+			<!-- Container -->
+			<div class="mx-auto flex w-full max-w-screen-xl flex-col items-center justify-center px-5 py-16 md:px-10 md:py-20">
+				<!-- HEADING TEXT -->
+				<p class="font-inter mb-2 text-center text-sm font-medium"> 3 sencillos pasos </p>
+				<h1 class="text-center text-3xl font-bold lg:text-4xl"> Como funciona? </h1>
+				<p class="font-inter mx-auto mb-12 mt-4 max-w-lg px-5 text-center text-base font-light text-gray-500"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum, perspiciatis, eligendi dolor maiores. </p>
+				<!-- HOW IT WORKS STEPS -->
+				<div class="flex flex-col items-start justify-center lg:flex-row">
+					<!-- BLOCK -->
+					<div class="relative my-8 flex w-full rounded-md lg:mx-8 lg:flex-col">
+					<div class="flex h-16 w-16 items-center justify-center rounded-md bg-gray-200">
+						<h2 class="text-3xl font-medium">1</h2>
+					</div>
+					<div class="ml-6 lg:ml-0">
+						<h2 class="mb-5 text-xl font-medium lg:mt-8"> Responde el test </h2>
+						<p class="font-inter max-w-md pr-5 text-base text-gray-500"> Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet </p>
+					</div>
+					<!-- MOBILE - HOW IT WORKS LINE -->
+					<svg class="absolute -bottom-[48px] left-[28px] lg:hidden" width="12" height="70" viewBox="0 0 12 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 0.226497L0.226497 6L6 11.7735L11.7735 6L6 0.226497ZM6 94.7735L11.7735 89L6 83.2265L0.226497 89L6 94.7735ZM5 6V10.15H7V6H5ZM5 18.45V26.75H7L7 18.45H5ZM5 35.05L5 43.35H7V35.05H5ZM5 51.65L5 59.95H7L7 51.65H5ZM5 68.25L5 76.55H7L7 68.25H5ZM5 84.85L5 89H7V84.85H5Z" fill="black"></path>
+					</svg>
+					<!-- DESKTOP - HOW IT WORKS LINE -->
+					<svg class="absolute right-0 top-7 hidden lg:block" width="170" height="12" viewBox="0 0 170 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M0.226497 6L6 11.7735L11.7735 6L6 0.226497L0.226497 6ZM169.773 6L164 0.226497L158.227 6L164 11.7735L169.773 6ZM6 7H9.95V5H6V7ZM17.85 7H25.75V5H17.85V7ZM33.65 7H41.55V5H33.65V7ZM49.45 7H57.35V5H49.45V7ZM65.25 7H73.15V5H65.25V7ZM81.05 7H88.95V5H81.05V7ZM96.85 7H104.75V5H96.85V7ZM112.65 7H120.55V5H112.65V7ZM128.45 7H136.35V5H128.45V7ZM144.25 7H152.15V5H144.25V7ZM160.05 7H164V5H160.05V7Z" fill="black" />
+					</svg>
+					</div>
+
+					<!-- BLOCK -->
+					<div class="relative my-8 flex w-full rounded-md lg:mx-8 lg:flex-col">
+					<div class="flex h-16 w-16 items-center justify-center rounded-md bg-gray-200">
+						<h2 class="text-3xl font-medium">2</h2>
+					</div>
+					<div class="ml-6 lg:ml-0">
+						<h2 class="mb-5 text-xl font-medium lg:mt-8"> Checa las carreras  </h2>
+						<p class="font-inter max-w-md pr-5 text-base text-gray-500"> Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet </p>
+					</div>
+					<!-- MOBILE - HOW IT WORKS LINE -->
+					<svg class="absolute -bottom-[48px] left-[28px] lg:hidden" width="12" height="70" viewBox="0 0 12 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 0.226497L0.226497 6L6 11.7735L11.7735 6L6 0.226497ZM6 94.7735L11.7735 89L6 83.2265L0.226497 89L6 94.7735ZM5 6V10.15H7V6H5ZM5 18.45V26.75H7L7 18.45H5ZM5 35.05L5 43.35H7V35.05H5ZM5 51.65L5 59.95H7L7 51.65H5ZM5 68.25L5 76.55H7L7 68.25H5ZM5 84.85L5 89H7V84.85H5Z" fill="black"></path>
+					</svg>
+					<!-- DESKTOP - HOW IT WORKS LINE -->
+					<svg class="absolute right-0 top-7 hidden lg:block" width="170" height="12" viewBox="0 0 170 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M0.226497 6L6 11.7735L11.7735 6L6 0.226497L0.226497 6ZM169.773 6L164 0.226497L158.227 6L164 11.7735L169.773 6ZM6 7H9.95V5H6V7ZM17.85 7H25.75V5H17.85V7ZM33.65 7H41.55V5H33.65V7ZM49.45 7H57.35V5H49.45V7ZM65.25 7H73.15V5H65.25V7ZM81.05 7H88.95V5H81.05V7ZM96.85 7H104.75V5H96.85V7ZM112.65 7H120.55V5H112.65V7ZM128.45 7H136.35V5H128.45V7ZM144.25 7H152.15V5H144.25V7ZM160.05 7H164V5H160.05V7Z" fill="black" />
+					</svg>
+					</div>
+					<!-- BLOCK -->
+					<div class="relative my-8 flex w-full rounded-md lg:mx-8 lg:flex-col">
+					<div class="flex h-16 w-16 items-center justify-center rounded-md bg-gray-200">
+						<h2 class="text-3xl font-medium">3</h2>
+					</div>
+					<div class="ml-6 lg:ml-0">
+						<h2 class="mb-5 text-xl font-medium lg:mt-8">Preguntale a Andromeda tus dudas</h2>
+						<p class="font-inter max-w-md pr-5 text-base text-gray-500"> Lorem ipsum dolor sit amet, elit ut aliquam, purus sit lorem ipsum dolor sit amet </p>
+					</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
 	
 
-	<!-- hero -->
-	<div class="w-full min-h-screen grid place-items-center">
-		<div class="w-full max-w-screen-lg">
-			<div class="mb-6">
-				<span class="inline-flex items-center rounded-[64px] border text-center font-semibold transition-all duration-300 ease-in-out h-7 px-3 py-1 text-sm border-rose-300 bg-rose-50 text-rose-600">100% Gratuito y Fácil de Usar</span>
-			</div>
-			<h1 class="font-onest text-5xl font-semibold">Explora tu futuro profesional con un test vocacional preciso, rápido y adaptado a ti.</h1>
-			<p class="font-onest  mt-8">
-				Vocaxion es un innovador test vocacional impulsado por inteligencia artificial, diseñado para ayudar a la comunidad educativa a identificar talentos y potenciales carreras profesionales. Con un enfoque moderno y sencillo, este test ofrece resultados personalizados que te acercan a tu verdadera vocación en solo minutos. ¿Estás listo para descubrir el camino profesional que te espera?	
-			</p>
-			<a href="#_" class="mt-8 font-onest relative p-0.5 inline-flex items-center justify-center font-bold overflow-hidden group rounded-md">
-				<span class="w-full h-full bg-gradient-to-br from-[#ff8a05] via-[#ff5478] to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-[#ff5478] group-hover:to-[#ff8a05] absolute"></span>
-				<span class="relative px-6 py-3 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
-				<span class="relative text-white">Iniciar mi Test</span>
-				</span>
-			</a>
-		</div>
-	</div>
-	<div class="absolute -top-20 left-0 right-0 translate-x-3/4 w-96 h-80 bg-pink-400/60 rounded-full blur-3xl rotate-9 mix-blend-multiply -z-10"></div>
-	<div class="absolute -top-20 left-0 right-0 translate-x-2/4 w-1/3 h-80 bg-yellow-300/60 rounded-full blur-3xl rotate-12 mix-blend-multiply -z-10"></div>
+	
+	
 </LandingPLayout>
