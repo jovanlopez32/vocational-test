@@ -1,6 +1,8 @@
 ---
 import LandingLayout from '../layouts/LandingLayout.astro'
 import Hero from '../components/Hero.astro'
+import About from '../assets/about.jpg';
+
 ---
 
 <LandingLayout title="Test Vocacional">
@@ -11,13 +13,18 @@ import Hero from '../components/Hero.astro'
 			<!-- Container -->
 			<div class="mx-auto w-full max-w-screen-xl">
 				<!-- Title -->
-				<h2 class="mb-8 text-3xl font-bold md:text-5xl"> Welcome to Prisma ✨</h2>
-				<p class="mb-8 max-w-lg text-sm text-gray-500 sm:text-base">
+				<div class="flex items-center justify-center gap-2 mb-2">
+					<h2 class="mb-8 text-5xl font-bold bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-[length:100%_3px] bg-no-repeat bg-[bottom]">
+						Welcome to Prisma
+					</h2>
+					<span class="mb-8 text-5xl font-bold">✨</span>
+				</div>
+				<p class="mb-10 text-sm text-gray-500 sm:text-base w-full sm:w-7/10 mx-auto text-center">
 					Prisma is an innovative AI-powered vocational test 🤖 designed to guide individuals in discovering their ideal career paths. Our platform offers a user-friendly experience, providing tailored results that align with your interests and strengths.
-				</p>
+				</p>								
 				<div class="grid gap-10 lg:grid-cols-2 lg:gap-12">
-					<img src="https://assets.website-files.com/6458c625291a94a195e6cf3a/64b7a30c42421ae3cbe5abb9_about%20image.svg" alt="Prisma illustration" class="inline-block h-full w-full rounded-2xl object-cover" />
-					<div class="flex flex-col gap-5 rounded-2xl border border-solid border-black p-10 sm:p-20">
+					<img src={About.src} alt="Prisma illustration" class="inline-block h-full w-full rounded-2xl object-cover" />
+					<div class="flex flex-col gap-5 rounded-2xl border border-solid border-black p-10 sm:p-20 bg-white">
 						<h2 class="text-3xl font-bold md:text-5xl">Our Mission 🎯</h2>
 						<p class="text-sm text-gray-500 sm:text-base">
 							At Prisma, our mission is to empower individuals to uncover their true potential through insightful assessments. We believe that everyone deserves the opportunity to find a fulfilling career that resonates with their unique talents and aspirations. 💡 Our advanced AI technology analyzes your responses to deliver personalized career recommendations.
@@ -33,15 +40,15 @@ import Hero from '../components/Hero.astro'
 			<!-- Container -->
 			<div class="mx-auto flex w-full max-w-screen-xl flex-col items-center justify-center px-5 py-16 md:px-10 md:py-20">
 				<!-- HEADING TEXT -->
-				<p class="font-inter mb-2 text-center text-sm font-medium"> 3 simple steps </p>
-				<h1 class="text-center text-3xl font-bold lg:text-4xl"> How does it work? </h1>
+				<p class="font-inter mb-2 text-center text-[1.2em] font-medium text-gray-600">3 simple steps</p>
+				<h1 class="text-center text-[3em] font-bold lg:text-[3em] bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-[length:100%_3px] bg-no-repeat bg-[bottom]">How does it work?</h1>
 				<p class="font-inter mx-auto mb-12 mt-4 max-w-lg px-5 text-center text-base font-light text-gray-500"> Discover your ideal career with our AI-powered vocational test. </p>
 				
 				<!-- HOW IT WORKS STEPS -->
 				<div class="flex flex-col items-start justify-center lg:flex-row">
 					<!-- BLOCK -->
 					<div class="relative my-8 flex w-full rounded-md lg:mx-8 lg:flex-col">
-						<div class="flex h-16 w-16 items-center justify-center rounded-md bg-gray-200">
+						<div class="flex h-16 w-16 items-center justify-center rounded-md bg-rose-400 text-white">
 							<h2 class="text-3xl font-medium">1</h2>
 						</div>
 						<div class="ml-6 lg:ml-0">
@@ -60,7 +67,7 @@ import Hero from '../components/Hero.astro'
 
 					<!-- BLOCK -->
 					<div class="relative my-8 flex w-full rounded-md lg:mx-8 lg:flex-col">
-						<div class="flex h-16 w-16 items-center justify-center rounded-md bg-gray-200">
+						<div class="flex h-16 w-16 items-center justify-center rounded-md bg-fuchsia-500 text-white">
 							<h2 class="text-3xl font-medium">2</h2>
 						</div>
 						<div class="ml-6 lg:ml-0">
@@ -79,7 +86,7 @@ import Hero from '../components/Hero.astro'
 
 					<!-- BLOCK -->
 					<div class="relative my-8 flex w-full rounded-md lg:mx-8 lg:flex-col">
-						<div class="flex h-16 w-16 items-center justify-center rounded-md bg-gray-200">
+						<div class="flex h-16 w-16 items-center justify-center rounded-md  bg-indigo-500 text-white">
 							<h2 class="text-3xl font-medium">3</h2>
 						</div>
 						<div class="ml-6 lg:ml-0">
@@ -91,9 +98,4 @@ import Hero from '../components/Hero.astro'
 			</div>
 		</section>
 	</div>
-
-	
-
-	
-	
 </LandingLayout>
