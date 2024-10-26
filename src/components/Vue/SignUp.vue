@@ -1,21 +1,43 @@
 <script setup >
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { navigate } from 'astro:transitions/client';
 /* https://github.com/withastro/roadmap/discussions/653 */
+
+/* import { Mistral } from "@mistralai/mistralai";
+
+const mistral = new Mistral({
+  apiKey: "tLStop8yeeMECtb0G4Y8tfXXRCjPLvRp",
+});
+
+const streamText = ref('');
+async function run() {
+  const result = await mistral.chat.stream({
+    model: "open-mistral-7b",
+    messages: [{role: 'user', content: 'What is the best French cheese?'}],
+  });
+
+
+  for await (const chunk of result) {
+      streamText.value += chunk.data.choices[0].delta.content;
+  }
+} */
+
 
 const formatData = reactive({ fullname: '', city: '', email: '' });
 
 const handleSubmit = (event) => {
   event.preventDefault(); // Evita el comportamiento por defecto del formulario.
-  localStorage.setItem('data', JSON.stringify(formatData));
+  localStorage.setItem('userData', JSON.stringify(formatData));
   
-  navigate('/');
+  navigate('/test-vocacional/questions');
 };
 
 
 </script>
 
 <template>
+  <!-- <button @click="run()" class="bg-neutral-800/90 py-2 px-4 rounded-lg text-white hover:bg-neutral-900 transition-all duration-500">mistral</button>
+  {{ streamText }} -->
   <div class="max-w-screen-lg">
     <a href="/" class="flex items-center gap-1 mb-8 ">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-6 fill-neutral-950">

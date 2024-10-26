@@ -1,0 +1,25 @@
+{
+    "areas": [
+      {
+        "name": "Arte y Creatividad",
+        "questionsGroup": [4, 9, 12, 20, 28]
+      },
+      {
+        "name": "Ciencias Sociales",
+        "questionsGroup": [6, 13, 23, 25, 34]
+      },
+      {
+        "name": "Económica, Administrativa y Financiera",
+        "questionsGroup": [5, 10, 15, 19, 21]
+      },
+      {
+        "name": "Ciencia y Tecnología",
+        "questionsGroup": [1, 7, 11, 17, 18]
+      },
+      {
+        "name": "Ciencias Ecológicas, Biológicas y de Salud",
+        "questionsGroup": [2, 3, 8, 14, 16]
+      }
+    ]
+  }
+  
