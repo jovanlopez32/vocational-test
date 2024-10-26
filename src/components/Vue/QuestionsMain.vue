@@ -176,7 +176,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-screen-lg mx-auto p-5 min-h-screen py-10 px-5 box-border grid items-center min-w-[980px]">
+  <div class="max-w-screen-lg mx-auto min-h-screen py-10 md:px-5 box-border grid items-center min-w-full md:min-w-[980px]">
 
     <div class=" flex gap-4 items-center  w-full max-w-screen-xl mx-auto mb-10">
       <div class=" w-full border-2 border-neutral-950 rounded-full h-4 overflow-hidden flex items-center">
