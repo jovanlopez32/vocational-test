@@ -8,73 +8,63 @@
         },
         {
             "name": "Ciencias Sociales",
-            "interested": 5,
-            "notInterested": 0
-        },
-        {
-            "name": "Económica, Administrativa y Financiera",
             "interested": 3,
             "notInterested": 2
         },
         {
+            "name": "Económica, Administrativa y Financiera",
+            "interested": 5,
+            "notInterested": 0
+        },
+        {
             "name": "Ciencia y Tecnología",
-            "interested": 2,
-            "notInterested": 3
+            "interested": 4,
+            "notInterested": 1
         },
         {
             "name": "Ciencias Ecológicas, Biológicas y de Salud",
-            "interested": 5,
-            "notInterested": 0
+            "interested": 2,
+            "notInterested": 3
         }
     ]
 }
 /* resultado de personalidad */
 {
-    "areas": [
-        {
-            "name": "Arte y Creatividad",
-            "average": null
-        },
-        {
-            "name": "Ciencias Sociales",
-            "average": null
-        },
-        {
-            "name": "Económica, Administrativa y Financiera",
-            "average": "0.75"
-        },
-        {
-            "name": "Ciencia y Tecnología",
-            "average": null
-        },
-        {
-            "name": "Ciencias Ecológicas, Biológicas y de Salud",
-            "average": null
-        }
-    ]
+    "Artistic": "1",
+    "Interpersonal": "0.75",
+    "Communication": "0.25",
+    "Managerial": "0.25",
+    "Mathematics": "0.75",
+    "Mechanical": "0.75",
+    "Science": "0.25"
 }
 /* resultados finales de prediccion */
 {
     "areas": [
         {
             "name": "Arte y Creatividad",
-            "prediction": "100%"
+            "predicted": 5,
+            
         },
         {
             "name": "Ciencias Sociales",
-            "prediction": "95.7%"
+            "predicted": 3,
+            
         },
         {
             "name": "Económica, Administrativa y Financiera",
-            "prediction": "70.8%"
+            "predicted": 5,
+            
         },
         {
             "name": "Ciencia y Tecnología",
-            "prediction": "34.5%"
+            "predicted": 4,
+            
         },
         {
             "name": "Ciencias Ecológicas, Biológicas y de Salud",
-            "prediction": "0%"
+            "predicted": 2,
+            
         }
     ]
 }

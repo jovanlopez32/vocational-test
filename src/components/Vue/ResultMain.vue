@@ -2,6 +2,8 @@
 import { ref, onMounted, computed } from 'vue';
 import { Mistral } from "@mistralai/mistralai";
 
+const systemContent = 'Eres Prisma, una IA experta en orientación vocacional con acceso a estos resultados: RESULTADOS_AREAS: ' + JSON.stringify(areasResults) + ' RESULTADOS_PERSONALIDAD: ' + JSON.stringify(personalityResults) + ' PREDICCIONES: ' + JSON.stringify(predictionResults) + ' PREGUNTAS_RESPONDIDAS: ' + JSON.stringify(questions) + ' MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional'
+
 
 const mistral = new Mistral({
   apiKey: "tLStop8yeeMECtb0G4Y8tfXXRCjPLvRp",
@@ -13,7 +15,10 @@ async function run() {
   const result = await mistral.chat.stream({
     model: "open-mistral-7b",
     messages: [
-        {role: 'system', content: 'You are a helpful assistant that specializes in French cuisine.'},
+        {
+            role: 'system', 
+            content: 'You are a helpful assistant that specializes in French cuisine.'
+        },
         {role: 'user', content: 'What is the best French cheese?'}
 
     ],

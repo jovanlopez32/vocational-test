@@ -33,7 +33,7 @@ const handleContinue = (event) => {
 
     // Log the results to the console
     console.log("Resultados del Test:", userData);
-
+    localStorage.setItem('sliderPersonality', JSON.stringify(sliderValues));
     localStorage.setItem('sliderData', JSON.stringify(userData)); // Store userData in local storage
     navigate('/test-vocacional/questions'); // Navigate to the next page
 };
