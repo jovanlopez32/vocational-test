@@ -32,7 +32,7 @@ const calculationResults = computed(() => {
         const sliderArea = sliderData.value.find(slider => slider.name === area.name);
         if (sliderArea) {
             // Calcular la puntuación usando la fórmula
-            const score = (area.meInteresa - area.noMeInteresa) * sliderArea.average;
+            const score = (area.interested - area.notInterested) * sliderArea.average;
             results.push({
                 name: area.name,
                 score: score
