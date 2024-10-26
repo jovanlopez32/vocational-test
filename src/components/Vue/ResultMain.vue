@@ -1,8 +1,124 @@
 <script setup>
+import { ref, onMounted, computed } from 'vue';
 
+// Crear referencias para almacenar los datos
+const areaResults = ref([]);
+const sliderData = ref([]);
+
+onMounted(() => {
+    // Obtener los datos de localStorage
+    const areaResultsFromStorage = localStorage.getItem('areaResults');
+    const sliderDataFromStorage = localStorage.getItem('sliderData');
+
+    // Verificar si hay datos antes de parsear
+    if (areaResultsFromStorage) {
+        const parsedAreaResults = JSON.parse(areaResultsFromStorage);
+        areaResults.value = parsedAreaResults.areas || []; // Acceder a 'areas'
+    }
+
+    if (sliderDataFromStorage) {
+        const parsedSliderData = JSON.parse(sliderDataFromStorage);
+        sliderData.value = parsedSliderData.areas || []; // Acceder a 'areas'
+    }
+});
+
+// Computed para calcular las puntuaciones
+const calculationResults = computed(() => {
+    const results = [];
+
+    console.log("resultado:", areaResults.value, "slider:", sliderData.value);
+
+    areaResults.value.forEach(area => {
+        const sliderArea = sliderData.value.find(slider => slider.name === area.name);
+        if (sliderArea) {
+            // Calcular la puntuación usando la fórmula
+            const score = (area.meInteresa - area.noMeInteresa) * sliderArea.average;
+            results.push({
+                name: area.name,
+                score: score
+            });
+        }
+    });
+
+    return results.sort((a, b) => b.score - a.score);
+});
+
+// Mostrar los resultados en consola
+console.log(calculationResults.value);
 </script>
 <template>
-    <div>
-        
+    <div class="grid grid-cols-7 grid-rows-7 gap-5 w-full min-h-screen absolute left-0 top-0 p-5 box-border">
+        <div class="col-span-2 row-span-7 border-4 border-black p-5">
+            <!-- Title -->
+            <div class="flex items-center justify-start gap-2 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-7" id="Layer_1" x="0" y="0" version="1.1" viewBox="0 0 48 48" xml:space="preserve">
+                    <linearGradient id="SVGID_1_" x1="37.924" x2="10.076" y1="9.144" y2="36.992" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#fea460"/>
+                        <stop offset=".033" stop-color="#feaa6a"/>
+                        <stop offset=".197" stop-color="#fec497"/>
+                        <stop offset=".362" stop-color="#ffd9bd"/>
+                        <stop offset=".525" stop-color="#ffeada"/>
+                        <stop offset=".687" stop-color="#fff5ee"/>
+                        <stop offset=".846" stop-color="#fffdfb"/>
+                        <stop offset="1" stop-color="#fff"/>
+                    </linearGradient>
+                    <path fill="url(#SVGID_1_)" d="M36,21.029V8.082C36,6.932,35.068,6,33.918,6H14.082C12.932,6,12,6.932,12,8.082v12.947 c0,5.368,3.533,9.91,8.4,11.429v3.808c0,2.61-2.124,4.734-4.734,4.734h-0.375c-0.276,0-0.5,0.224-0.5,0.5s0.224,0.5,0.5,0.5h17.418 c0.276,0,0.5-0.224,0.5-0.5s-0.224-0.5-0.5-0.5h-0.475c-2.61,0-4.734-2.124-4.734-4.734v-3.781C32.418,30.996,36,26.433,36,21.029z"/>
+                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12.34,9.5H7.564c-1.105,0-2,0.895-2,2v3.545c0,3.943,3.061,7.171,6.936,7.437"/>
+                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M35.706,22.465c3.777-0.365,6.73-3.547,6.73-7.42V11.5c0-1.105-0.895-2-2-2H35.5"/>
+                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M31.809,6.5H33.5c1.105,0,2,0.895,2,2V21c0,6.351-5.149,11.5-11.5,11.5h0c-3.396,0-6.448-1.472-8.553-3.813"/>
+                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12.595,22.482C12.532,21.997,12.5,21.502,12.5,21V8.5c0-1.105,0.895-2,2-2h11.606"/>
+                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20.4,36.266c0,2.891-2.343,5.234-5.234,5.234h0"/>
+                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M27.5,31.957v4.309c0,2.891,2.343,5.234,5.234,5.234h0"/>
+                    <line x1="14.791" x2="33.209" y1="41.5" y2="41.5" fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                </svg>
+                <h1 class="text-2xl font-bold">Leaderboard de Carreras</h1>
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right text-neutral-800">
+                <thead class="text-neutral-900 uppercase">
+                    <tr>
+                        <th scope="col" class="py-3">Posición</th>
+                        <th scope="col" class="py-3">Área</th>
+                        <th scope="col" class="py-3">Puntuación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(result, index) in calculationResults" :key="index">
+                        <td scope="row" class="px-6 py-4">{{ index + 1 }}</td>
+                        <td>{{ result.name }}</td>
+                        <td>{{ result.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-5">
+                <h2 class="text-xl font-bold">Habilidades clave</h2>
+                <h3 class="text-base font-bold mt-3">Computación</h3>
+                <ul class="list-disc ml-4 text-sm columns-2 gap-10 mt-2">
+                    <li>Pensamiento lógico</li>
+                    <li>Resolución de problemas</li>
+                    <li>Trabajo en equipo</li>
+                    <li>Liderazgo</li>
+                </ul>
+                <!-- Repite según sea necesario -->
+            </div>
+
+            <div class="mt-5 text-sm">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores necessitatibus error, doloremque nulla minus incidunt explicabo rem a id eaque.</p>
+            </div>
+        </div>
+        <!-- Chat -->
+        <div class="col-span-5 row-span-6 border-4 border-black p-5">
+            <div class="mb-5">
+                <h2 class="text-3xl font-bold">Preguntale a la IA acerca de tu carrera!</h2>
+            </div>
+            <div class="w-full min-h-[500px] h-full max-h-[80%] border-4 border-black mb-5"></div>
+            <div class="flex gap-4">
+                <input type="text" class="px-4 py-3 w-full border-4 border-black">
+                <button class="min-w-20 bg-black text-white">Enviar</button>
+            </div>
+        </div>
+
+        <div class="col-span-2 col-start-4 row-start-7">4</div>
+        <div class="col-span-2 col-start-6 row-start-7">5</div>
     </div>
 </template>

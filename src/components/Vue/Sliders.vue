@@ -38,27 +38,11 @@ const handleContinue = (event) => {
     localStorage.setItem('sliderData', JSON.stringify(userData)); // Store userData in local storage
     navigate('/test-vocacional/questions'); // Navigate to the next page
 };
-
-// Reactive variable to hold results
-const results = ref({});
-
-// Function to load results from localStorage
-const loadResults = () => {
-    const storedData = localStorage.getItem('sliderData');
-    if (storedData) {
-        results.value = JSON.parse(storedData).areas; // Parse and get areas
-    }
-};
-
-// Load results when the component mounts
-onMounted(() => {
-    loadResults();
-});
 </script>
 
 
 <template>
-    <div class="rounded-lg p-4 shadow-lg bg-slate-50">
+    <div class="p-4 ">
         <div class="flex px-4">
             <h1 class="text-4xl font-bold from-purple-500 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent mb-1">
                 Career Aptitude Test 🎓
@@ -67,23 +51,21 @@ onMounted(() => {
         <p class="text-base px-4">Adjust the Sliders for Career Suggestions</p>
 
         <form @submit="handleContinue" class="flex flex-col gap-4">
-            <div class="flex">
-                <div class="flex flex-col">
-                    <div v-for="(value, key) in sliderValues" :key="key" style="max-width:300px;">
-                        <div class="price-range p-4">
-                            <span class="text-sm">{{ key }}</span>
-                            <input
-                                class="w-full accent-indigo-600"
-                                type="range"
-                                v-model="sliderValues[key]"
-                                min="0"
-                                max="1"
-                                step=".25"
-                            />
-                            <div class="-mt-2 flex w-full justify-between">
-                                <span class="text-sm text-gray-600">None</span>
-                                <span class="text-sm text-gray-600">High</span>
-                            </div>
+            <div class="flex flex-col">
+                <div v-for="(value, key) in sliderValues" :key="key" style="max-width:300px;">
+                    <div class="price-range p-4">
+                        <span class="text-sm">{{ key }}</span>
+                        <input
+                            class="w-full accent-indigo-600"
+                            type="range"
+                            v-model="sliderValues[key]"
+                            min="0"
+                            max="1"
+                            step=".25"
+                        />
+                        <div class="-mt-2 flex w-full justify-between">
+                            <span class="text-sm text-gray-600">None</span>
+                            <span class="text-sm text-gray-600">High</span>
                         </div>
                     </div>
                 </div>
