@@ -1,0 +1,60 @@
+{
+    "keySkills": [
+      {
+        "id": 1,
+        "area": "Arte y Creatividad",
+        "skills": [
+          "Creatividad",
+          "Pensamiento Crítico",
+          "Comunicación Visual",
+          "Atención al Detalle",
+          "Innovación"
+        ]
+      },
+      {
+        "id": 2,
+        "area": "Ciencias Sociales",
+        "skills": [
+          "Investigación",
+          "Pensamiento Analítico",
+          "Comunicación Efectiva",
+          "Habilidad de Persuasión",
+          "Empatía"
+        ]
+      },
+      {
+        "id": 3,
+        "area": "Económica, Administrativa y Financiera",
+        "skills": [
+          "Planificación",
+          "Gestión de Recursos",
+          "Habilidades Numéricas",
+          "Toma de Decisiones",
+          "Liderazgo"
+        ]
+      },
+      {
+        "id": 4,
+        "area": "Ciencia y Tecnología",
+        "skills": [
+          "Pensamiento Lógico",
+          "Resolución de Problemas",
+          "Trabajo en Equipo",
+          "Adaptabilidad",
+          "Innovación Tecnológica"
+        ]
+      },
+      {
+        "id": 5,
+        "area": "Ciencias Ecológicas, Biológicas y de Salud",
+        "skills": [
+          "Habilidades de Investigación",
+          "Atención a los Detalles",
+          "Conciencia Ambiental",
+          "Habilidades Interpersonales",
+          "Responsabilidad"
+        ]
+      }
+    ]
+  }
+  

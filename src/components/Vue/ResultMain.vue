@@ -1,5 +1,29 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { Mistral } from "@mistralai/mistralai";
+
+
+const mistral = new Mistral({
+  apiKey: "tLStop8yeeMECtb0G4Y8tfXXRCjPLvRp",
+});
+
+const streamText = ref('');
+
+async function run() {
+  const result = await mistral.chat.stream({
+    model: "open-mistral-7b",
+    messages: [
+        {role: 'system', content: 'You are a helpful assistant that specializes in French cuisine.'},
+        {role: 'user', content: 'What is the best French cheese?'}
+
+    ],
+  });
+
+  for await (const chunk of result) {
+      streamText.value += chunk.data.choices[0].delta.content;
+  }
+} 
+
 
 // Crear referencias para almacenar los datos
 const areaResults = ref([]);

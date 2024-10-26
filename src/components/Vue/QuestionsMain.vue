@@ -185,8 +185,8 @@ onMounted(() => {
           :style="{ width: `${getCurrentProgress}%` }"
         ></div>
       </div>
-      <!-- <p class="text-xl font-semibold">{{ getCurrentProgress }}%</p> -->
-       {{ currentPage }}
+      <p class="text-xl font-semibold">{{ getCurrentProgress }}%</p>
+       <!-- {{ currentPage }} -->
     </div>
 
     <!-- Welcome Page -->

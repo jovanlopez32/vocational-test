@@ -1,0 +1,80 @@
+/* resultados del test */
+{
+    "areas": [
+        {
+            "name": "Arte y Creatividad",
+            "interested": 5,
+            "notInterested": 0
+        },
+        {
+            "name": "Ciencias Sociales",
+            "interested": 5,
+            "notInterested": 0
+        },
+        {
+            "name": "Económica, Administrativa y Financiera",
+            "interested": 3,
+            "notInterested": 2
+        },
+        {
+            "name": "Ciencia y Tecnología",
+            "interested": 2,
+            "notInterested": 3
+        },
+        {
+            "name": "Ciencias Ecológicas, Biológicas y de Salud",
+            "interested": 5,
+            "notInterested": 0
+        }
+    ]
+}
+/* resultado de personalidad */
+{
+    "areas": [
+        {
+            "name": "Arte y Creatividad",
+            "average": null
+        },
+        {
+            "name": "Ciencias Sociales",
+            "average": null
+        },
+        {
+            "name": "Económica, Administrativa y Financiera",
+            "average": "0.75"
+        },
+        {
+            "name": "Ciencia y Tecnología",
+            "average": null
+        },
+        {
+            "name": "Ciencias Ecológicas, Biológicas y de Salud",
+            "average": null
+        }
+    ]
+}
+/* resultados finales de prediccion */
+{
+    "areas": [
+        {
+            "name": "Arte y Creatividad",
+            "prediction": "100%"
+        },
+        {
+            "name": "Ciencias Sociales",
+            "prediction": "95.7%"
+        },
+        {
+            "name": "Económica, Administrativa y Financiera",
+            "prediction": "70.8%"
+        },
+        {
+            "name": "Ciencia y Tecnología",
+            "prediction": "34.5%"
+        },
+        {
+            "name": "Ciencias Ecológicas, Biológicas y de Salud",
+            "prediction": "0%"
+        }
+    ]
+}
