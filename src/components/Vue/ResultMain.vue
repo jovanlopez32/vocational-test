@@ -1,28 +1,9 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 
-// Crear referencias para almacenar los datos
-const areaResults = ref([]);
-const sliderData = ref([]);
-
 const open = ref(false); 
 
 onMounted(() => {
-    // Obtener los datos de localStorage
-    const areaResultsFromStorage = localStorage.getItem('areaResults');
-    const sliderDataFromStorage = localStorage.getItem('sliderData');
-
-    // Verificar si hay datos antes de parsear
-    if (areaResultsFromStorage) {
-        const parsedAreaResults = JSON.parse(areaResultsFromStorage);
-        areaResults.value = parsedAreaResults.areas || []; // Acceder a 'areas'
-    }
-
-    if (sliderDataFromStorage) {
-        const parsedSliderData = JSON.parse(sliderDataFromStorage);
-        sliderData.value = parsedSliderData.areas || []; // Acceder a 'areas'
-    }
-
     // Open the modal and set it to close after 5 seconds
     open.value = true;
     setTimeout(() => {
@@ -31,32 +12,6 @@ onMounted(() => {
 
 });
 
-// Computed para calcular las puntuaciones
-const calculationResults = computed(() => {
-    const results = [];
-
-    console.log("resultado:", areaResults.value, "slider:", sliderData.value);
-
-    areaResults.value.forEach(area => {
-        const sliderArea = sliderData.value.find(slider => slider.name === area.name);
-        if (sliderArea) {
-            // Calcular la puntuación usando la fórmula
-            const normalizedInterest = ((area.interested / 5) * 100)  * 0.8;
-            const normalizedSlider = ((sliderArea.average) * 100) * 0.2;
-            const score = (normalizedInterest + normalizedSlider);
-            results.push({
-                name: area.name,
-                score: score.toFixed(2) 
-            });
-        }
-    });
-    console.log("results:", results);
-
-    return results.sort((a, b) => b.score - a.score);
-});
-
-// Mostrar los resultados en consola
-console.log(calculationResults.value);
 </script>
 <template>
     <div class="grid grid-cols-7 grid-rows-7 gap-5 w-full min-h-screen absolute left-0 top-0 p-5 box-border">
