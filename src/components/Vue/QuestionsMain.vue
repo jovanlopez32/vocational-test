@@ -7,7 +7,7 @@ import { navigate } from 'astro:transitions/client';
 // Constants
 const QUESTIONS_PER_PAGE = 3;
 const TOTAL_QUESTIONS = questionsData.preguntas.length;
-const TOTAL_PAGES = Math.ceil(TOTAL_QUESTIONS / QUESTIONS_PER_PAGE)+4;
+const TOTAL_PAGES = Math.ceil(TOTAL_QUESTIONS / QUESTIONS_PER_PAGE) + 4;
 // Calculate page positions for motivational messages
 const QUARTER_PAGE = Math.ceil(TOTAL_PAGES * 0.25);
 const HALF_PAGE = Math.ceil(TOTAL_PAGES * 0.5);
@@ -27,18 +27,18 @@ const areaResults = ref({});
 // Motivational pages configuration
 const motivationalPages = {
   [QUARTER_PAGE]: {
-    title: "¡Excelente progreso!",
-    message: "Has completado un cuarto del test. Tu honestidad en cada respuesta nos ayuda a conocerte mejor. ¡Continúa así!",
+    title: "Great Progress!",
+    message: "You have completed a quarter of the test. Your honesty in each response helps us understand you better. Keep it up!",
     image: "🌱"
   },
   [HALF_PAGE]: {
-    title: "¡Vas por la mitad!",
-    message: "¡Fantástico! Has llegado a la mitad del test. Cada respuesta nos ayuda a construir un perfil único, tan único como tú. ¡Sigamos adelante!",
+    title: "You're Halfway There!",
+    message: "Fantastic! You've reached the halfway point of the test. Every response helps us build a unique profile, as unique as you. Let's keep going!",
     image: "🌟"
   },
   [THREE_QUARTERS_PAGE]: {
-    title: "¡La meta está cada vez más cerca!",
-    message: "¡Increíble! Has completado tres cuartos del test. Tu dedicación en cada respuesta está dando sus frutos. ¡Ya casi llegamos!",
+    title: "The Goal is Getting Closer!",
+    message: "Incredible! You've completed three-quarters of the test. Your dedication in each response is paying off. We're almost there!",
     image: "✨"
   }
 };
@@ -47,8 +47,8 @@ const motivationalPages = {
 const initializeAreaResults = () => {
   areasData.areas.forEach(area => {
     areaResults.value[area.name] = {
-      meInteresa: 0,
-      noMeInteresa: 0
+      interested: 0,
+      notInterested: 0
     };
   });
 };
@@ -121,7 +121,7 @@ const updateAreaCounters = () => {
     if (question.selected !== null) {
       const area = findQuestionArea(question.id);
       if (area) {
-        const counter = question.selected ? 'meInteresa' : 'noMeInteresa';
+        const counter = question.selected ? 'interested' : 'notInterested';
         areaResults.value[area.name][counter]++;
       }
     }
@@ -152,7 +152,7 @@ const getCurrentProgress = computed(() => {
 // Handle test completion
 const handleTestCompletion = () => {
     if (allQuestionsAnswered.value) {
-        console.log('Test completado', areaResults.value);
+        console.log('Test completed', areaResults.value);
     }
   
     const transformedAreaResults = {
@@ -162,11 +162,10 @@ const handleTestCompletion = () => {
         }))
     };
 
-    // Guarda el objeto transformado en localStorage
+    // Store the transformed object in localStorage
     localStorage.setItem('areaResults', JSON.stringify(transformedAreaResults));
     navigate('/test-vocacional/result');
 };
-
 
 // Lifecycle
 onMounted(() => {
@@ -177,12 +176,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full min-h-screen py-10 px-5 box-border grid items-center">
+  <div class="max-w-screen-lg mx-auto p-5 min-h-screen py-10 px-5 box-border grid items-center min-w-[980px]">
 
     <div class=" flex gap-4 items-center  w-full max-w-screen-xl mx-auto mb-10">
       <div class=" w-full border-2 border-neutral-950 rounded-full h-4 overflow-hidden flex items-center">
         <div
-          class="bg-blue-600 h-4 rounded-full transition-all  duration-500"
+          class="bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 h-4 rounded-full transition-all  duration-500"
           :style="{ width: `${getCurrentProgress}%` }"
         ></div>
       </div>
@@ -193,15 +192,21 @@ onMounted(() => {
     <!-- Welcome Page -->
     <div v-if="isFirstPage" class=" flex items-center justify-center">
       <div class="">
-        <h2 class="text-5xl font-bold">Bienvenido {{ userData.fullname }}</h2>
-        <h3 class="mt-3 text-lg">
-            ¡Hola! Estamos emocionados de acompañarte en este viaje de autodescubrimiento.
+        <h1 class="text-5xl font-bold from-purple-500 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent mb-1 pb-2.5">
+            Welcome {{ userData.fullname }}
+        </h1>
+        <h3 class="mt-3 text-lg text-neutral-600">
+            Hello! 👋 We are excited to accompany you on this journey of self-discovery.
         </h3>
-        <p class="mt-4 text-base">
-            Antes de comenzar, te pedimos una cosa: <strong>sé completamente honesto y auténtico.</strong> No pienses en lo que los demás esperarían o en lo que parecería "correcto". Piensa solo en lo que realmente sientes y deseas. Este es un viaje que te pertenece, así que no hay respuestas buenas o malas, solo tus propias elecciones.
+        <p class="mt-4 text-base text-neutral-600">
+            Before we begin, we ask one thing: 
+            <span class="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-[length:100%_2px] bg-no-repeat bg-[bottom] font-bold text-black">
+                completely honest and authentic.
+            </span> 
+            Don't think about what others might expect or what seems "correct." Just think about what you truly feel and want. This is a journey that belongs to you, so there are no right or wrong answers, only your own choices.
         </p>
-        <p class="mt-5 text-base">
-            Tómate el tiempo que necesites, queremos entender tus intereses de la forma más sincera y auténtica posible. ¡No te preocupes por nada más, estamos aquí para acompañarte en cada paso de este viaje!
+        <p class="mt-5 text-base text-neutral-600">
+            Take the time you need; we want to understand your interests as sincerely and authentically as possible. 💯 Don't worry about anything else; we are here to accompany you every step of this journey!
         </p>
         
       </div>
@@ -213,15 +218,16 @@ onMounted(() => {
         <!-- <div class="text-6xl mb-6 animate-bounce">
           {{ motivationalPages[currentPage].image }}
         </div> -->
-        <h3 class="text-3xl font-bold mb-6 text-blue-600">
+        <h3 class="text-4xl font-bold from-purple-500 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent mb-1 pb-2.5">
           {{ motivationalPages[currentPage].title }}
         </h3>
-        <p class="text-lg text-gray-700 leading-relaxed">
-          {{ motivationalPages[currentPage].message }}
+        <p class="text-base text-neutral-600 leading-relaxed">
+          {{ motivationalPages[currentPage].message }} 
+          <span>{{ motivationalPages[currentPage].image }}</span>
         </p>
         <div class="mt-8">
-          <span class="text-sm text-gray-500">
-            Progreso actual: {{ getCurrentProgress }}%
+          <span class="text-sm text-gray-500 italic">
+            Current progress: {{ getCurrentProgress }}%
           </span>
         </div>
       </div>
@@ -234,25 +240,32 @@ onMounted(() => {
         :key="question.id"
         class=" px-5 py-5 rounded-lg "
       >
-        <p class="text-lg mb-4">{{index+1}}.- {{ question.text }}</p>
+        <p class="text-base mb-4 text-neutral-600">{{index+1}}.- {{ question.text }}</p>
         <div class="flex space-x-6">
           
-            
-            <label class="inline-flex items-center justify-between w-full p-5 text-neutral-600 bg-transparent border-2 border-neutral-400 rounded-lg cursor-pointer  peer-checked:border-blue-600 hover:text-neutral-800  peer-checked:text-gray-600 hover:bg-gray-50" :class="question.selected === true ? '!border-sky-600 text-neutral-800  !bg-gray-50' : 'bg-transparent'" >
+            <label class="inline-flex items-center justify-between w-full p-5 border-2 rounded-lg cursor-pointer peer-checked:border-sky-600"
+                :class="{
+                    'border-green-600 text-green-700 bg-green-100': question.selected === true,
+                    ' border-neutral-400  text-neutral-600 bg-transparent hover:text-neutral-800 hover:bg-gray-50 ': question.selected !== true
+                }"
+            >
                 <input type="checkbox" :checked="question.selected === true" @change="handleSelection(question.id, true)" class="hidden peer">
                 <div class="block">
-                    <!-- <svg class="mb-2 text-green-400 w-7 h-7" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M356.9 64.3H280l-56 88.6-48-88.6H0L224 448 448 64.3h-91.1zm-301.2 32h53.8L224 294.5 338.4 96.3h53.8L224 384.5 55.7 96.3z"/></svg> -->
-                    <div class="w-full text-lg font-semibold">Me interesa</div>
-                    <div class="w-full text-sm">Me siento identificado con esta opción.</div>
+                    <div class="w-full text-lg font-semibold">I’m Interested</div>
+                    <div class="w-full text-sm">I identify with this option.</div>
                 </div>
             </label>
 
-            <label class="inline-flex items-center justify-between w-full p-5 text-neutral-600 bg-transparent border-2 border-neutral-400 rounded-lg cursor-pointer  peer-checked:border-blue-600 hover:text-neutral-800  peer-checked:text-gray-600 hover:bg-gray-50" :class="question.selected === false ? '!border-red-600 text-neutral-800 !bg-gray-50' : 'bg-transparent'" >
-                <input type="checkbox" :checked="question.selected === false"  @change="handleSelection(question.id, false)" class="hidden peer">
+            <label class="inline-flex items-center justify-between w-full p-5 border-2 rounded-lg cursor-pointer peer-checked:border-sky-600"
+                :class="{
+                    'border-red-800 text-red-800 bg-red-100': question.selected === false,
+                    ' border-neutral-400  text-neutral-600 bg-transparent hover:text-neutral-800 hover:bg-gray-50 ': question.selected !== false
+                }"
+            >                
+            <input type="checkbox" :checked="question.selected === false"  @change="handleSelection(question.id, false)" class="hidden peer">
                 <div class="block">
-                    <!-- <svg class="mb-2 text-green-400 w-7 h-7" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M356.9 64.3H280l-56 88.6-48-88.6H0L224 448 448 64.3h-91.1zm-301.2 32h53.8L224 294.5 338.4 96.3h53.8L224 384.5 55.7 96.3z"/></svg> -->
-                    <div class="w-full text-lg font-semibold">No me interesa</div>
-                    <div class="w-full text-sm">No me siento identificado con esta función.</div>
+                    <div class="w-full text-lg font-semibold">Not Interested</div>
+                    <div class="w-full text-sm">I do not identify with this function.</div>
                 </div>
             </label>
 
@@ -262,38 +275,72 @@ onMounted(() => {
 
     <!-- Navigation Buttons -->
     <div class="mt-8 flex justify-between items-center">
-      <button
+
+      <button 
         v-if="!isFirstPage"
-        @click="previousPage"
-        class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
-      >
-        Anterior
-      </button>
+          @click="previousPage"
+          class="relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full">
+            <span class="w-full h-full bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 group-hover:from-rose-400 group-hover:via-fuchsia-500 group-hover:to-indigo-500 absolute"></span>
+            <span class="relative px-10 py-3 transition-all ease-out bg-neutral-950 rounded-full group-hover:bg-opacity-0 duration-300 w-full">
+                <span class="relative text-white">Previous</span>
+            </span>
+        </button>
       <div v-else class="w-20"></div>
 
       <div v-if="!isLastPage">
         <button
           @click="nextPage"
           :disabled="!currentPageQuestionsAnswered"
-          class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          :class="{
+            'relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full': true,
+            'bg-gray-700 cursor-not-allowed': !currentPageQuestionsAnswered
+          }"
         >
-          Siguiente
+          <span
+            class="w-full h-full absolute"
+            :class="{
+              'bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500': currentPageQuestionsAnswered,
+              'opacity-50 from-gray-400 via-gray-500 to-gray-700': !currentPageQuestionsAnswered
+            }"
+          ></span>
+          <span
+            class="relative px-10 py-3 transition-all ease-out bg-neutral-950 rounded-full group-hover:bg-opacity-0 duration-300 w-full"
+            :class="{ 'opacity-50': !currentPageQuestionsAnswered }"
+          >
+            <span class="relative text-white">Continue</span>
+          </span>
         </button>
+
       </div>
       <div v-else>
         <button
           @click="handleTestCompletion"
           :disabled="!allQuestionsAnswered"
-          class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          :class="{
+            'relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full': true,
+            'bg-gray-700 cursor-not-allowed': !allQuestionsAnswered
+          }"
         >
-          Finalizar Test
+          <span
+            class="w-full h-full absolute"
+            :class="{
+              'bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500': allQuestionsAnswered,
+              'opacity-50 from-gray-400 via-gray-500 to-gray-700': !allQuestionsAnswered
+            }"
+          ></span>
+          <span
+            class="relative px-10 py-3 transition-all ease-out bg-neutral-950 rounded-full group-hover:bg-opacity-0 duration-300 w-full"
+            :class="{ 'opacity-50': !allQuestionsAnswered }"
+          >
+            <span class="relative text-white">Finish Test</span>
+          </span>
         </button>
       </div>
     </div>
 
     <!-- Results Summary -->
     <!-- <div class="mt-8 bg-gray-50 p-6 rounded-lg">
-      <h3 class="text-2xl font-bold mb-4">Resultados por área</h3>
+      <h3 class="text-2xl font-bold mb-4">Results by Area</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div
           v-for="(results, areaName) in areaResults"
@@ -302,8 +349,8 @@ onMounted(() => {
         >
           <h4 class="font-semibold text-lg">{{ areaName }}</h4>
           <div class="mt-2 space-y-1">
-            <p class="text-green-600">Me interesa: {{ results.meInteresa }}</p>
-            <p class="text-red-600">No me interesa: {{ results.noMeInteresa }}</p>
+            <p class="text-green-600">Interested: {{ results.interested }}</p>
+            <p class="text-red-600">Not Interested: {{ results.notInterested }}</p>
           </div>
         </div>
       </div>

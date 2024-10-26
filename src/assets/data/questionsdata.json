@@ -1,30 +1,29 @@
 {
-    "preguntas": [
-      { "id": 4, "text": "Ilustrar, dibujar y animar digitalmente." },
-      { "id": 9, "text": "Tocar un instrumento y componer música." },
-      { "id": 12, "text": "Diseñar logotipos y portadas de una revista." },
-      { "id": 20, "text": "Pintar, hacer esculturas, ilustrar libros de arte, etcétera." },
-      { "id": 28, "text": "Prepararse para ser modelo profesional." },
-      { "id": 6, "text": "Realizar excavaciones para descubrir restos del pasado." },
-      { "id": 13, "text": "Organizar eventos y atender a sus asistentes." },
-      { "id": 23, "text": "Defender a clientes individuales o empresas en juicios de diferente naturaleza." },
-      { "id": 25, "text": "Investigar las causas y efectos de los trastornos emocionales." },
-      { "id": 34, "text": "Escribir artículos periodísticos, cuentos, novelas y otros." },
-      { "id": 5, "text": "Seleccionar, capacitar y motivar al personal de una organización/empresa." },
-      { "id": 10, "text": "Planificar cuáles son las metas de una organización pública o privada a mediano y largo plazo." },
-      { "id": 15, "text": "Controlar ingresos y egresos de fondos y presentar el balance final de una institución." },
-      { "id": 19, "text": "Hacer propuestas y formular estrategias para aprovechar las relaciones económicas entre dos países." },
-      { "id": 21, "text": "Elaborar campañas para introducir un nuevo producto al mercado." },
-      { "id": 1, "text": "Diseñar programas de computación y explorar nuevas aplicaciones tecnológicas para uso del internet." },
-      { "id": 7, "text": "Resolver problemas de cálculo para construir un puente." },
-      { "id": 11, "text": "Diseñar y planificar la producción masiva de artículos como muebles, autos, equipos de oficina, empaques y envases para alimentos y otros." },
-      { "id": 17, "text": "Concebir planos para viviendas, edificios y ciudadelas." },
-      { "id": 18, "text": "Investigar y probar nuevos productos farmacéuticos." },
-      { "id": 2, "text": "Criar, cuidar y tratar animales domésticos y de campo." },
-      { "id": 3, "text": "Investigar sobre áreas verdes, medio ambiente y cambios climáticos." },
-      { "id": 8, "text": "Diseñar cursos para enseñar a la gente sobre temas de salud e higiene." },
-      { "id": 14, "text": "Atender la salud de personas enfermas." },
-      { "id": 16, "text": "Hacer experimentos con plantas (frutas, árboles, flores)." }
-    ]
-  }
-  
+  "preguntas": [
+      { "id": 4, "text": "Illustrate, draw, and animate digitally." },
+      { "id": 9, "text": "Play an instrument and compose music." },
+      { "id": 12, "text": "Design logos and magazine covers." },
+      { "id": 20, "text": "Paint, create sculptures, illustrate art books, etc." },
+      { "id": 28, "text": "Prepare to be a professional model." },
+      { "id": 6, "text": "Conduct excavations to uncover remains from the past." },
+      { "id": 13, "text": "Organize events and attend to their participants." },
+      { "id": 23, "text": "Defend individual clients or companies in various types of lawsuits." },
+      { "id": 25, "text": "Investigate the causes and effects of emotional disorders." },
+      { "id": 34, "text": "Write journalistic articles, stories, novels, and others." },
+      { "id": 5, "text": "Select, train, and motivate staff in an organization/company." },
+      { "id": 10, "text": "Plan the medium and long-term goals of a public or private organization." },
+      { "id": 15, "text": "Control income and expenses of funds and present the final balance of an institution." },
+      { "id": 19, "text": "Make proposals and formulate strategies to leverage economic relations between two countries." },
+      { "id": 21, "text": "Develop campaigns to introduce a new product to the market." },
+      { "id": 1, "text": "Design software programs and explore new technological applications for internet use." },
+      { "id": 7, "text": "Solve calculus problems to construct a bridge." },
+      { "id": 11, "text": "Design and plan the mass production of items such as furniture, cars, office equipment, packaging, and containers for food and others." },
+      { "id": 17, "text": "Conceive plans for houses, buildings, and communities." },
+      { "id": 18, "text": "Research and test new pharmaceutical products." },
+      { "id": 2, "text": "Raise, care for, and treat domestic and farm animals." },
+      { "id": 3, "text": "Research green areas, the environment, and climate change." },
+      { "id": 8, "text": "Design courses to educate people about health and hygiene topics." },
+      { "id": 14, "text": "Attend to the health of sick individuals." },
+      { "id": 16, "text": "Conduct experiments with plants (fruits, trees, flowers)." }
+  ]
+}
