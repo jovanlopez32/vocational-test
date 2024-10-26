@@ -29,7 +29,7 @@ const handleSubmit = (event) => {
   event.preventDefault(); // Evita el comportamiento por defecto del formulario.
   localStorage.setItem('userData', JSON.stringify(formatData));
   
-  navigate('/test-vocacional/questions');
+  navigate('/test-vocacional/sliders');
 };
 
 

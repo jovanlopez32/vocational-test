@@ -4,8 +4,19 @@ import areasData from '../../assets/data/areasdata.json';
 import questionsData from '../../assets/data/questionsdata.json';
 
 // Constants
-const QUESTIONS_PER_PAGE = 5;
+const QUESTIONS_PER_PAGE = 3;
+const TOTAL_QUESTIONS = questionsData.preguntas.length;
+const TOTAL_PAGES = Math.ceil(TOTAL_QUESTIONS / QUESTIONS_PER_PAGE)+4;
+// Calculate page positions for motivational messages
+const QUARTER_PAGE = Math.ceil(TOTAL_PAGES * 0.25);
+const HALF_PAGE = Math.ceil(TOTAL_PAGES * 0.5);
+const THREE_QUARTERS_PAGE = Math.ceil(TOTAL_PAGES * 0.75);
 
+console.log(TOTAL_QUESTIONS);
+console.log(TOTAL_PAGES);
+console.log(QUARTER_PAGE);
+console.log(HALF_PAGE);
+console.log(THREE_QUARTERS_PAGE);
 // State management
 const userData = ref('');
 const questions = ref([]);
@@ -14,14 +25,19 @@ const areaResults = ref({});
 
 // Motivational pages configuration
 const motivationalPages = {
-  3: {
-    title: "¡Vas por buen camino!",
-    message: "Has completado un tercio del test y lo estás haciendo genial. Tómate un respiro, reflexiona sobre tus respuestas anteriores. Cada elección que haces nos ayuda a conocerte mejor. ¡Sigamos adelante juntos!",
+  [QUARTER_PAGE]: {
+    title: "¡Excelente progreso!",
+    message: "Has completado un cuarto del test. Tu honestidad en cada respuesta nos ayuda a conocerte mejor. ¡Continúa así!",
+    image: "🌱"
+  },
+  [HALF_PAGE]: {
+    title: "¡Vas por la mitad!",
+    message: "¡Fantástico! Has llegado a la mitad del test. Cada respuesta nos ayuda a construir un perfil único, tan único como tú. ¡Sigamos adelante!",
     image: "🌟"
   },
-  6: {
+  [THREE_QUARTERS_PAGE]: {
     title: "¡La meta está cada vez más cerca!",
-    message: "¡Wow! Ya has completado más de la mitad del test. Tu dedicación y sinceridad en cada respuesta están construyendo un perfil único, tan único como tú. Respira profundo, que vamos por la última etapa. ¡Tú puedes!",
+    message: "¡Increíble! Has completado tres cuartos del test. Tu dedicación en cada respuesta está dando sus frutos. ¡Ya casi llegamos!",
     image: "✨"
   }
 };
@@ -45,12 +61,12 @@ const shuffleQuestions = () => {
       order: Math.random()
     }))
     .sort((a, b) => a.order - b.order);
-  
+
   questions.value = shuffled;
 };
 
 // Pagination logic
-const calculatedTotalPages = computed(() => Math.ceil(questions.value.length / QUESTIONS_PER_PAGE) + 2); // +2 for motivational pages
+const calculatedTotalPages = computed(() => Math.ceil(questions.value.length / QUESTIONS_PER_PAGE) + 3);  // +1 for the welcome page
 
 const isMotivationalPage = computed(() => {
   return Object.keys(motivationalPages).includes(currentPage.value.toString());
@@ -58,13 +74,13 @@ const isMotivationalPage = computed(() => {
 
 const currentQuestions = computed(() => {
   if (isMotivationalPage.value) return [];
-  
+
   let adjustedPage = currentPage.value;
   // Adjust page number to account for motivational pages
   if (currentPage.value > 3) adjustedPage--;
   if (currentPage.value > 6) adjustedPage--;
-  
-  const start = (adjustedPage - 1) * QUESTIONS_PER_PAGE;
+
+  const start = (adjustedPage - 2) * QUESTIONS_PER_PAGE;  // -1 for the welcome page
   const end = start + QUESTIONS_PER_PAGE;
   return questions.value.slice(start, end);
 });
@@ -97,7 +113,7 @@ const handleSelection = (questionId, value) => {
 // Area results management
 const updateAreaCounters = () => {
   initializeAreaResults();
-  
+
   questions.value.forEach(question => {
     if (question.selected !== null) {
       const area = findQuestionArea(question.id);
@@ -110,7 +126,7 @@ const updateAreaCounters = () => {
 };
 
 const findQuestionArea = (questionId) => {
-  return areasData.areas.find(area => 
+  return areasData.areas.find(area =>
     area.questionsGroup.includes(questionId)
   );
 };
@@ -146,27 +162,41 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full min-h-screen py-10 px-5">
-    <!-- Header -->
-    <div class="mb-8">
-      <h2 class="text-4xl font-bold">Bienvenido {{ userData.fullname }}</h2>
-      <p class="mt-3">
-        Por favor, responde a todas las preguntas seleccionando si te interesa o no te interesa cada actividad.
-      </p>
-      <div class="mt-4 w-full bg-gray-200 rounded-full h-2.5">
+  <div class="w-full min-h-screen py-10 px-5 box-border grid items-center">
+
+    <div class=" flex gap-4 items-center  w-full max-w-screen-xl mx-auto mb-10">
+      <div class=" w-full border-2 border-neutral-950 rounded-full h-4 overflow-hidden flex items-center">
         <div
-          class="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
+          class="bg-blue-600 h-4 rounded-full transition-all  duration-500"
           :style="{ width: `${getCurrentProgress}%` }"
         ></div>
+      </div>
+      <p class="text-xl font-semibold">{{ getCurrentProgress }}%</p>
+    </div>
+
+    <!-- Welcome Page -->
+    <div v-if="isFirstPage" class=" flex items-center justify-center">
+      <div class="">
+        <h2 class="text-5xl font-bold">Bienvenido {{ userData.fullname }}</h2>
+        <h3 class="mt-3 text-lg">
+            ¡Hola! Estamos emocionados de acompañarte en este viaje de autodescubrimiento.
+        </h3>
+        <p class="mt-4 text-base">
+            Antes de comenzar, te pedimos una cosa: <strong>sé completamente honesto y auténtico.</strong> No pienses en lo que los demás esperarían o en lo que parecería "correcto". Piensa solo en lo que realmente sientes y deseas. Este es un viaje que te pertenece, así que no hay respuestas buenas o malas, solo tus propias elecciones.
+        </p>
+        <p class="mt-5 text-base">
+            Tómate el tiempo que necesites, queremos entender tus intereses de la forma más sincera y auténtica posible. ¡No te preocupes por nada más, estamos aquí para acompañarte en cada paso de este viaje!
+        </p>
+        
       </div>
     </div>
 
     <!-- Motivational Page -->
-    <div v-if="isMotivationalPage" class="min-h-[400px] flex items-center justify-center">
-      <div class="text-center max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105">
-        <div class="text-6xl mb-6 animate-bounce">
+    <div v-else-if="isMotivationalPage" class=" flex items-center justify-center">
+      <div class="text-center max-w-2xl mx-auto p-8 ">
+        <!-- <div class="text-6xl mb-6 animate-bounce">
           {{ motivationalPages[currentPage].image }}
-        </div>
+        </div> -->
         <h3 class="text-3xl font-bold mb-6 text-blue-600">
           {{ motivationalPages[currentPage].title }}
         </h3>
@@ -182,37 +212,34 @@ onMounted(() => {
     </div>
 
     <!-- Questions Form -->
-    <div v-else class="space-y-6">
+    <div v-else class="space-y-3">
       <div
-        v-for="question in currentQuestions"
+        v-for="(question, index) in currentQuestions"
         :key="question.id"
-        class="bg-white p-6 rounded-lg shadow transition-all duration-300"
+        class=" px-5 py-5 rounded-lg "
       >
-        <p class="text-lg mb-4">{{ question.text }}</p>
+        <p class="text-lg mb-4">{{index+1}}.- {{ question.text }}</p>
         <div class="flex space-x-6">
-          <label class="flex items-center space-x-2 cursor-pointer group">
-            <input
-              type="checkbox"
-              :checked="question.selected === true"
-              @change="handleSelection(question.id, true)"
-              class="form-checkbox h-5 w-5 text-blue-600 transition-colors duration-200"
-            >
-            <span class="group-hover:text-blue-600 transition-colors duration-200">
-              Me interesa
-            </span>
-          </label>
           
-          <label class="flex items-center space-x-2 cursor-pointer group">
-            <input
-              type="checkbox"
-              :checked="question.selected === false"
-              @change="handleSelection(question.id, false)"
-              class="form-checkbox h-5 w-5 text-red-600 transition-colors duration-200"
-            >
-            <span class="group-hover:text-red-600 transition-colors duration-200">
-              No me interesa
-            </span>
-          </label>
+            
+            <label class="inline-flex items-center justify-between w-full p-5 text-neutral-600 bg-transparent border-2 border-neutral-400 rounded-lg cursor-pointer  peer-checked:border-blue-600 hover:text-neutral-800  peer-checked:text-gray-600 hover:bg-gray-50" :class="question.selected === true ? '!border-sky-600 text-neutral-800  !bg-gray-50' : 'bg-transparent'" >
+                <input type="checkbox" :checked="question.selected === true" @change="handleSelection(question.id, true)" class="hidden peer">
+                <div class="block">
+                    <!-- <svg class="mb-2 text-green-400 w-7 h-7" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M356.9 64.3H280l-56 88.6-48-88.6H0L224 448 448 64.3h-91.1zm-301.2 32h53.8L224 294.5 338.4 96.3h53.8L224 384.5 55.7 96.3z"/></svg> -->
+                    <div class="w-full text-lg font-semibold">Me interesa</div>
+                    <div class="w-full text-sm">Me siento identificado con esta opción.</div>
+                </div>
+            </label>
+
+            <label class="inline-flex items-center justify-between w-full p-5 text-neutral-600 bg-transparent border-2 border-neutral-400 rounded-lg cursor-pointer  peer-checked:border-blue-600 hover:text-neutral-800  peer-checked:text-gray-600 hover:bg-gray-50" :class="question.selected === false ? '!border-red-600 text-neutral-800 !bg-gray-50' : 'bg-transparent'" >
+                <input type="checkbox" :checked="question.selected === false"  @change="handleSelection(question.id, false)" class="hidden peer">
+                <div class="block">
+                    <!-- <svg class="mb-2 text-green-400 w-7 h-7" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M356.9 64.3H280l-56 88.6-48-88.6H0L224 448 448 64.3h-91.1zm-301.2 32h53.8L224 294.5 338.4 96.3h53.8L224 384.5 55.7 96.3z"/></svg> -->
+                    <div class="w-full text-lg font-semibold">No me interesa</div>
+                    <div class="w-full text-sm">No me siento identificado con esta función.</div>
+                </div>
+            </label>
+
         </div>
       </div>
     </div>
@@ -249,7 +276,7 @@ onMounted(() => {
     </div>
 
     <!-- Results Summary -->
-    <div class="mt-8 bg-gray-50 p-6 rounded-lg">
+    <!-- <div class="mt-8 bg-gray-50 p-6 rounded-lg">
       <h3 class="text-2xl font-bold mb-4">Resultados por área</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div
@@ -264,6 +291,6 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
