@@ -48,37 +48,17 @@ console.log(calculationResults.value);
 </script>
 <template>
     <div class="grid grid-cols-7 grid-rows-7 gap-5 w-full min-h-screen absolute left-0 top-0 p-5 box-border">
-        <div class="col-span-2 row-span-7 border-4 border-black p-5">
+        <div class="col-span-2 row-span-7 rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding">
             <!-- Title -->
             <div class="flex items-center justify-start gap-2 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-7" id="Layer_1" x="0" y="0" version="1.1" viewBox="0 0 48 48" xml:space="preserve">
-                    <linearGradient id="SVGID_1_" x1="37.924" x2="10.076" y1="9.144" y2="36.992" gradientUnits="userSpaceOnUse">
-                        <stop offset="0" stop-color="#fea460"/>
-                        <stop offset=".033" stop-color="#feaa6a"/>
-                        <stop offset=".197" stop-color="#fec497"/>
-                        <stop offset=".362" stop-color="#ffd9bd"/>
-                        <stop offset=".525" stop-color="#ffeada"/>
-                        <stop offset=".687" stop-color="#fff5ee"/>
-                        <stop offset=".846" stop-color="#fffdfb"/>
-                        <stop offset="1" stop-color="#fff"/>
-                    </linearGradient>
-                    <path fill="url(#SVGID_1_)" d="M36,21.029V8.082C36,6.932,35.068,6,33.918,6H14.082C12.932,6,12,6.932,12,8.082v12.947 c0,5.368,3.533,9.91,8.4,11.429v3.808c0,2.61-2.124,4.734-4.734,4.734h-0.375c-0.276,0-0.5,0.224-0.5,0.5s0.224,0.5,0.5,0.5h17.418 c0.276,0,0.5-0.224,0.5-0.5s-0.224-0.5-0.5-0.5h-0.475c-2.61,0-4.734-2.124-4.734-4.734v-3.781C32.418,30.996,36,26.433,36,21.029z"/>
-                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12.34,9.5H7.564c-1.105,0-2,0.895-2,2v3.545c0,3.943,3.061,7.171,6.936,7.437"/>
-                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M35.706,22.465c3.777-0.365,6.73-3.547,6.73-7.42V11.5c0-1.105-0.895-2-2-2H35.5"/>
-                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M31.809,6.5H33.5c1.105,0,2,0.895,2,2V21c0,6.351-5.149,11.5-11.5,11.5h0c-3.396,0-6.448-1.472-8.553-3.813"/>
-                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12.595,22.482C12.532,21.997,12.5,21.502,12.5,21V8.5c0-1.105,0.895-2,2-2h11.606"/>
-                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20.4,36.266c0,2.891-2.343,5.234-5.234,5.234h0"/>
-                    <path fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M27.5,31.957v4.309c0,2.891,2.343,5.234,5.234,5.234h0"/>
-                    <line x1="14.791" x2="33.209" y1="41.5" y2="41.5" fill="none" stroke="#fe7c12" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-                </svg>
-                <h1 class="text-2xl font-bold">Leaderboard de Carreras</h1>
+                <h1 class="text-2xl font-bold">🏆 Race Leaderboard</h1>
             </div>
             <table class="w-full text-sm text-left rtl:text-right text-neutral-800">
                 <thead class="text-neutral-900 uppercase">
                     <tr>
-                        <th scope="col" class="py-3">Posición</th>
-                        <th scope="col" class="py-3">Área</th>
-                        <th scope="col" class="py-3">Puntuación</th>
+                        <th scope="col" class="py-3">Position</th>
+                        <th scope="col" class="py-3">Area</th>
+                        <th scope="col" class="py-3">Score</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,15 +71,15 @@ console.log(calculationResults.value);
             </table>
 
             <div class="mt-5">
-                <h2 class="text-xl font-bold">Habilidades clave</h2>
-                <h3 class="text-base font-bold mt-3">Computación</h3>
+                <h2 class="text-xl font-bold">Key Skills</h2>
+                <h3 class="text-base font-bold mt-3">Computing</h3>
                 <ul class="list-disc ml-4 text-sm columns-2 gap-10 mt-2">
-                    <li>Pensamiento lógico</li>
-                    <li>Resolución de problemas</li>
-                    <li>Trabajo en equipo</li>
-                    <li>Liderazgo</li>
+                    <li>Logical Thinking</li>
+                    <li>Problem Solving</li>
+                    <li>Teamwork</li>
+                    <li>Leadership</li>
                 </ul>
-                <!-- Repite según sea necesario -->
+                <!-- Repeat as necessary -->
             </div>
 
             <div class="mt-5 text-sm">
@@ -107,18 +87,29 @@ console.log(calculationResults.value);
             </div>
         </div>
         <!-- Chat -->
-        <div class="col-span-5 row-span-6 border-4 border-black p-5">
+        <div class="col-span-5 row-span-6 rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding">
             <div class="mb-5">
-                <h2 class="text-3xl font-bold">Preguntale a la IA acerca de tu carrera!</h2>
+                <h2 class="text-3xl font-bold">Ask the AI about 
+                    <span class="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-[length:100%_2px] bg-no-repeat bg-[bottom]">your career</span>
+                    ! 🤖 
+                </h2>
             </div>
-            <div class="w-full min-h-[500px] h-full max-h-[80%] border-4 border-black mb-5"></div>
+            <div class="w-full min-h-[500px] h-full max-h-[80%] rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding mb-5"></div>
             <div class="flex gap-4">
-                <input type="text" class="px-4 py-3 w-full border-4 border-black">
-                <button class="min-w-20 bg-black text-white">Enviar</button>
+                <input type="text" class="px-4 py-3 w-full rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding ">
+                <button class="relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full">
+                    <span class="w-full h-full bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 group-hover:from-rose-400 group-hover:via-fuchsia-500 group-hover:to-indigo-500 absolute"></span>
+                    <span class="relative px-10 py-3 transition-all ease-out bg-neutral-950 rounded-full group-hover:bg-opacity-0 duration-300 w-full flex justify-center">
+                        <span class="relative text-white">Send</span>
+                    </span>
+                </button>
             </div>
         </div>
 
         <div class="col-span-2 col-start-4 row-start-7">4</div>
         <div class="col-span-2 col-start-6 row-start-7">5</div>
     </div>
+
+    <div class="absolute -top-20 left-0 translate-x-1/4 w-96 h-80 bg-rose-400/40 rounded-full blur-3xl rotate-9 mix-blend-multiply -z-10"></div>
+    <div class="absolute -top-20 left-0 translate-x-2/4 w-1/3 h-80 bg-indigo-500/40 rounded-full blur-3xl rotate-12 mix-blend-multiply -z-10"></div>
 </template>
