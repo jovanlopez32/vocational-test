@@ -34,6 +34,8 @@ async function run() {
 const areaResults = ref([]);
 const sliderData = ref([]);
 
+const open = ref(false); 
+
 onMounted(() => {
     // Obtener los datos de localStorage
     const areaResultsFromStorage = localStorage.getItem('areaResults');
@@ -49,6 +51,13 @@ onMounted(() => {
         const parsedSliderData = JSON.parse(sliderDataFromStorage);
         sliderData.value = parsedSliderData.areas || []; // Acceder a 'areas'
     }
+
+    // Open the modal and set it to close after 5 seconds
+    open.value = true;
+    setTimeout(() => {
+        open.value = false;
+    }, 5000); // Close modal after 5000 milliseconds (5 seconds)
+
 });
 
 // Computed para calcular las puntuaciones
@@ -144,4 +153,29 @@ console.log(calculationResults.value);
 
     <div class="absolute -top-20 left-0 translate-x-1/4 w-96 h-80 bg-rose-400/40 rounded-full blur-3xl rotate-9 mix-blend-multiply -z-10"></div>
     <div class="absolute -top-20 left-0 translate-x-2/4 w-1/3 h-80 bg-indigo-500/40 rounded-full blur-3xl rotate-12 mix-blend-multiply -z-10"></div>
+
+    <!-- Modal Overlay -->
+    <div v-if="open" class="fixed inset-0 px-2 z-10 overflow-hidden flex items-center justify-center">
+        <div x-show="open" x-transition:enter="transition-opacity ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="absolute inset-0 bg-white bg-opacity-100 transition-opacity"></div>
+            <!-- Modal Content -->
+            <div x-show="open" 
+            x-transition:enter="transition-transform ease-out duration-300" 
+            x-transition:enter-start="transform scale-75" 
+            x-transition:enter-end="transform scale-100" 
+            x-transition:leave="transition-transform ease-in duration-300" 
+            x-transition:leave-start="transform scale-100" 
+            x-transition:leave-end="transform scale-75" 
+            class=" rounded-md overflow-hidden max-w-md w-full sm:w-96 md:w-1/2 lg:w-2/3 xl:w-1/3 z-50">
+            <!-- Modal Header -->
+            <div class="flex-col gap-4 w-full h-full flex items-center justify-center">
+                <div class="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full">
+                    <svg viewBox="0 0 24 24" fill="currentColor" height="1em" width="1em" class="animate-ping">
+                    <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-black animate-pulse">Loading...</h3>
+            </div>
+        </div>
+    </div>
+
 </template>
