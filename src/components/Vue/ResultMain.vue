@@ -10,6 +10,27 @@ const resultPersonality = ref('');
 const resultTest = ref('');
 const userData = ref('');
 
+const userMessages = ref([]);
+const assistantMessages = ref([]);
+/* [
+            {
+               role: 'user',
+               content: petition.value
+           },
+           {
+               role: 'user',
+               content: petition.value
+           },
+           {
+               role: 'user',
+               content: petition.value
+           },
+           {
+               role: 'user',
+               content: petition.value
+           },
+] */
+
  const systemContent = 'Eres Prisma, una IA experta en orientación vocacional con acceso a estos resultados: RESULTADOS_TEST: ' + JSON.stringify(resultTest.value) + ' RESULTADOS_PERSONALIDAD: ' + JSON.stringify(resultPersonality.value) + ' PREDICCIONES: ' + JSON.stringify(resultPrediction.value) + ' PREGUNTAS_RESPONDIDAS: ' + JSON.stringify(questionsData) + ' MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional'
 
 onMounted(() => {
@@ -36,30 +57,47 @@ const petition = ref('');
 
 async function run() {
     streamText.value = '';
+    
+    // Guardar mensaje del usuario
+    userMessages.value.push(petition.value);
+    
+    const result = await mistral.chat.stream({
+        model: "open-mistral-7b",
+        messages: [
+            {
+                role: 'system',
+                content: systemContent
+            },
+           {
+               role: 'user',
+               content: petition.value
+           },
+           {
+               role: 'assistant',
+               content: '...'
+           },
+           {
+               role: 'user',
+               content: petition.value
+           },
 
-   
-  const result = await mistral.chat.stream({
-    model: "open-mistral-7b",
-    messages: [
-        {
-            role: 'system', 
-            content: systemContent
-        },
-        {role: 'user', content: petition.value},
-        {role: 'assistant', content: 'What is the best French cheese?'}
+        ]
+           
+    });
 
-    ],
-  });
-
-  for await (const chunk of result) {
-      streamText.value += chunk.data.choices[0].delta.content;
-     
-  }
-  
-  petition.value = '';
-  
-} 
-
+    let currentResponse = '';
+    
+    for await (const chunk of result) {
+        const content = chunk.data.choices[0].delta.content;
+        currentResponse += content;
+        streamText.value += content;
+    }
+    
+    // Guardar respuesta del asistente
+    assistantMessages.value.push(currentResponse);
+    
+    petition.value = '';
+}
 
 const open = ref(false); 
 
@@ -115,9 +153,20 @@ const open = ref(false);
                 </h2>
             </div>
             <!-- Chat box -->
-            <div class="w-full min-h-[500px] h-full max-h-[80%] rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding mb-5">
-
-                {{ streamText }}
+            <div class="w-full min-h-[500px] h-full max-h-[80%] rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding mb-5 overflow-y-auto">
+                <div v-for="(message, index) in assistantMessages" :key="index" class="mb-4">
+                    <!-- Skip system message (index 0) -->
+                    <diV :class="['p-3 rounded-lg', 
+                        message.role === 'user' 
+                            ? 'bg-blue-100 ml-auto max-w-[80%]' 
+                            : 'bg-gray-100 mr-auto max-w-[80%]']">
+                        {{ message.content }}
+                    </div>
+                </div>
+                <!-- Show streaming response if any -->
+                <div v-if="streamText" class="bg-gray-100 p-3 rounded-lg mr-auto max-w-[80%]">
+                    {{ streamText }}
+                </div>
             </div>
             
             <div class="flex gap-4">
