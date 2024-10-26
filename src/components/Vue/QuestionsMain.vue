@@ -2,6 +2,7 @@
 import { onMounted, ref, computed } from 'vue';
 import areasData from '../../assets/data/areasdata.json';
 import questionsData from '../../assets/data/questionsdata.json';
+import { navigate } from 'astro:transitions/client';
 
 // Constants
 const QUESTIONS_PER_PAGE = 3;
@@ -66,7 +67,7 @@ const shuffleQuestions = () => {
 };
 
 // Pagination logic
-const calculatedTotalPages = computed(() => Math.ceil(questions.value.length / QUESTIONS_PER_PAGE) + 3);  // +1 for the welcome page
+const calculatedTotalPages = computed(() => Math.ceil(questions.value.length / QUESTIONS_PER_PAGE) + 4);  // +1 for the welcome page
 
 const isMotivationalPage = computed(() => {
   return Object.keys(motivationalPages).includes(currentPage.value.toString());
@@ -77,8 +78,10 @@ const currentQuestions = computed(() => {
 
   let adjustedPage = currentPage.value;
   // Adjust page number to account for motivational pages
-  if (currentPage.value > 3) adjustedPage--;
-  if (currentPage.value > 6) adjustedPage--;
+  if (currentPage.value > QUARTER_PAGE) adjustedPage--;
+  if (currentPage.value > HALF_PAGE) adjustedPage--;
+  if (currentPage.value > THREE_QUARTERS_PAGE) adjustedPage--;
+
 
   const start = (adjustedPage - 2) * QUESTIONS_PER_PAGE;  // -1 for the welcome page
   const end = start + QUESTIONS_PER_PAGE;
@@ -148,10 +151,22 @@ const getCurrentProgress = computed(() => {
 
 // Handle test completion
 const handleTestCompletion = () => {
-  if (allQuestionsAnswered.value) {
-    console.log('Test completado', areaResults.value);
-  }
+    if (allQuestionsAnswered.value) {
+        console.log('Test completado', areaResults.value);
+    }
+  
+    const transformedAreaResults = {
+        areas: Object.keys(areaResults.value).map(key => ({
+            name: key,
+            ...areaResults.value[key]
+        }))
+    };
+
+    // Guarda el objeto transformado en localStorage
+    localStorage.setItem('areaResults', JSON.stringify(transformedAreaResults));
+    navigate('/test-vocacional/result');
 };
+
 
 // Lifecycle
 onMounted(() => {
@@ -171,7 +186,8 @@ onMounted(() => {
           :style="{ width: `${getCurrentProgress}%` }"
         ></div>
       </div>
-      <p class="text-xl font-semibold">{{ getCurrentProgress }}%</p>
+      <!-- <p class="text-xl font-semibold">{{ getCurrentProgress }}%</p> -->
+       {{ currentPage }}
     </div>
 
     <!-- Welcome Page -->
