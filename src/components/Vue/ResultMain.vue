@@ -1,9 +1,30 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { Mistral } from "@mistralai/mistralai";
+import areasData from '../../assets/data/areasdata.json';
+import questionsData from '../../assets/data/questionsdata.json';
 
-const systemContent = 'Eres Prisma, una IA experta en orientación vocacional con acceso a estos resultados: RESULTADOS_AREAS: ' + JSON.stringify(areasResults) + ' RESULTADOS_PERSONALIDAD: ' + JSON.stringify(personalityResults) + ' PREDICCIONES: ' + JSON.stringify(predictionResults) + ' PREGUNTAS_RESPONDIDAS: ' + JSON.stringify(questions) + ' MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional'
+/* consts */
+const resultPrediction = ref('');
+const resultPersonality = ref('');
+const resultTest = ref('');
+const userData = ref('');
 
+ const systemContent = 'Eres Prisma, una IA experta en orientación vocacional con acceso a estos resultados: RESULTADOS_TEST: ' + JSON.stringify(resultTest.value) + ' RESULTADOS_PERSONALIDAD: ' + JSON.stringify(resultPersonality.value) + ' PREDICCIONES: ' + JSON.stringify(resultPrediction.value) + ' PREGUNTAS_RESPONDIDAS: ' + JSON.stringify(questionsData) + ' MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional'
+
+onMounted(() => {
+    resultPrediction.value = localStorage.getItem('results');
+    resultPersonality.value = localStorage.getItem('sliderPersonality');
+    resultTest.value = localStorage.getItem('areaResults');
+    userData.value = localStorage.getItem('userData');
+
+    // Open the modal and set it to close after 5 seconds
+    open.value = true;
+    setTimeout(() => {
+        open.value = false;
+    }, 0); // Close modal after 5000 milliseconds (5 seconds)
+
+});
 
 const mistral = new Mistral({
   apiKey: "tLStop8yeeMECtb0G4Y8tfXXRCjPLvRp",
@@ -11,35 +32,38 @@ const mistral = new Mistral({
 
 const streamText = ref('');
 
+const petition = ref('');
+
 async function run() {
+    streamText.value = '';
+
+   
   const result = await mistral.chat.stream({
     model: "open-mistral-7b",
     messages: [
         {
             role: 'system', 
-            content: 'You are a helpful assistant that specializes in French cuisine.'
+            content: systemContent
         },
-        {role: 'user', content: 'What is the best French cheese?'}
+        {role: 'user', content: petition.value},
+        {role: 'assistant', content: 'What is the best French cheese?'}
 
     ],
   });
 
   for await (const chunk of result) {
       streamText.value += chunk.data.choices[0].delta.content;
+     
   }
+  
+  petition.value = '';
+  
 } 
 
 
 const open = ref(false); 
 
-onMounted(() => {
-    // Open the modal and set it to close after 5 seconds
-    open.value = true;
-    setTimeout(() => {
-        open.value = false;
-    }, 5000); // Close modal after 5000 milliseconds (5 seconds)
 
-});
 
 </script>
 <template>
@@ -57,13 +81,13 @@ onMounted(() => {
                         <th scope="col" class="py-3">Score</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="(result, index) in calculationResults" :key="index">
+                <!-- <tbody>
+                    <tr v-for="(result, index) in resultPrediction" :key="index">
                         <td scope="row" class="px-6 py-4">{{ index + 1 }}</td>
                         <td>{{ result.name }}</td>
                         <td>{{ result.score }}%</td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
 
             <div class="mt-5">
@@ -90,10 +114,15 @@ onMounted(() => {
                     ! 🤖 
                 </h2>
             </div>
-            <div class="w-full min-h-[500px] h-full max-h-[80%] rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding mb-5"></div>
+            <!-- Chat box -->
+            <div class="w-full min-h-[500px] h-full max-h-[80%] rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding mb-5">
+
+                {{ streamText }}
+            </div>
+            
             <div class="flex gap-4">
-                <input type="text" class="px-4 py-3 w-full rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding ">
-                <button class="relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full">
+                <input placeholder="Your petition" v-model="petition" type="text" class="px-4 py-3 w-full rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding ">
+                <button @click="run()" class="relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full">
                     <span class="w-full h-full bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 group-hover:from-rose-400 group-hover:via-fuchsia-500 group-hover:to-indigo-500 absolute"></span>
                     <span class="relative px-10 py-3 transition-all ease-out bg-neutral-950 rounded-full group-hover:bg-opacity-0 duration-300 w-full flex justify-center">
                         <span class="relative text-white">Send</span>

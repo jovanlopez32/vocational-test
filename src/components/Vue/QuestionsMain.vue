@@ -23,6 +23,7 @@ const userData = ref('');
 const questions = ref([]);
 const currentPage = ref(1);
 const areaResults = ref({});
+const sliderData = ref([]);
 
 // Motivational pages configuration
 const motivationalPages = {
@@ -164,8 +165,43 @@ const handleTestCompletion = () => {
 
     // Store the transformed object in localStorage
     localStorage.setItem('areaResults', JSON.stringify(transformedAreaResults));
+
+    const areaResultsFromStorage = localStorage.getItem('areaResults');
+    const sliderDataFromStorage = localStorage.getItem('sliderData');
+
+    // Verificar si hay datos antes de parsear
+    if (areaResultsFromStorage) {
+        const parsedAreaResults = JSON.parse(areaResultsFromStorage);
+        areaResults.value = parsedAreaResults.areas || []; // Acceder a 'areas'
+    }
+
+    if (sliderDataFromStorage) {
+        const parsedSliderData = JSON.parse(sliderDataFromStorage);
+        sliderData.value = parsedSliderData.areas || []; // Acceder a 'areas'
+    }
+
+    const results = [];
+
+    areaResults.value.forEach(area => {
+        const sliderArea = sliderData.value.find(slider => slider.name === area.name);
+        if (sliderArea) {
+            // Calcular la puntuación usando la fórmula
+            const normalizedInterest = ((area.interested / 5) * 100)  * 0.8;
+            const normalizedSlider = ((sliderArea.average) * 100) * 0.2;
+            const score = (normalizedInterest + normalizedSlider);
+            results.push({
+                name: area.name,
+                score: score.toFixed(2) 
+            });
+        }
+    });
+
+    const sortedResult = results.sort((a, b) => b.score - a.score)
+
+    localStorage.setItem('results', JSON.stringify(sortedResult));
     navigate('/test-vocacional/result');
 };
+
 
 // Lifecycle
 onMounted(() => {

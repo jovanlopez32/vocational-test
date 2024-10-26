@@ -1,70 +1,22 @@
-/* resultados del test */
-{
-    "areas": [
-        {
-            "name": "Arte y Creatividad",
-            "interested": 5,
-            "notInterested": 0
-        },
-        {
-            "name": "Ciencias Sociales",
-            "interested": 3,
-            "notInterested": 2
-        },
-        {
-            "name": "Económica, Administrativa y Financiera",
-            "interested": 5,
-            "notInterested": 0
-        },
-        {
-            "name": "Ciencia y Tecnología",
-            "interested": 4,
-            "notInterested": 1
-        },
-        {
-            "name": "Ciencias Ecológicas, Biológicas y de Salud",
-            "interested": 2,
-            "notInterested": 3
-        }
-    ]
-}
-/* resultado de personalidad */
-{
-    "Artistic": "1",
-    "Interpersonal": "0.75",
-    "Communication": "0.25",
-    "Managerial": "0.25",
-    "Mathematics": "0.75",
-    "Mechanical": "0.75",
-    "Science": "0.25"
-}
-/* resultados finales de prediccion */
-{
-    "areas": [
-        {
-            "name": "Arte y Creatividad",
-            "predicted": 5,
-            
-        },
-        {
-            "name": "Ciencias Sociales",
-            "predicted": 3,
-            
-        },
-        {
-            "name": "Económica, Administrativa y Financiera",
-            "predicted": 5,
-            
-        },
-        {
-            "name": "Ciencia y Tecnología",
-            "predicted": 4,
-            
-        },
-        {
-            "name": "Ciencias Ecológicas, Biológicas y de Salud",
-            "predicted": 2,
-            
-        }
-    ]
-}
+[
+    {
+        "name": "Arte y Creatividad",
+        "score": "90.00"
+    },
+    {
+        "name": "Económica, Administrativa y Financiera",
+        "score": "80.00"
+    },
+    {
+        "name": "Ciencia y Tecnología",
+        "score": "64.00"
+    },
+    {
+        "name": "Ciencias Sociales",
+        "score": "48.00"
+    },
+    {
+        "name": "Ciencias Ecológicas, Biológicas y de Salud",
+        "score": "32.00"
+    }
+]
