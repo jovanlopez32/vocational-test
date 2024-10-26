@@ -32,13 +32,16 @@ const calculationResults = computed(() => {
         const sliderArea = sliderData.value.find(slider => slider.name === area.name);
         if (sliderArea) {
             // Calcular la puntuación usando la fórmula
-            const score = (area.interested - area.notInterested) * sliderArea.average;
+            const normalizedInterest = ((area.interested / 5) * 100)  * 0.8;
+            const normalizedSlider = ((sliderArea.average) * 100) * 0.2;
+            const score = (normalizedInterest + normalizedSlider);
             results.push({
                 name: area.name,
-                score: score
+                score: score.toFixed(2) 
             });
         }
     });
+    console.log("results:", results);
 
     return results.sort((a, b) => b.score - a.score);
 });
@@ -65,7 +68,7 @@ console.log(calculationResults.value);
                     <tr v-for="(result, index) in calculationResults" :key="index">
                         <td scope="row" class="px-6 py-4">{{ index + 1 }}</td>
                         <td>{{ result.name }}</td>
-                        <td>{{ result.score }}</td>
+                        <td>{{ result.score }}%</td>
                     </tr>
                 </tbody>
             </table>

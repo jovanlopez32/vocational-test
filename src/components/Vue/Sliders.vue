@@ -15,15 +15,14 @@ const sliderValues = reactive({
 
 // Function to calculate averages and store in the desired format
 const calculateAverages = () => {
-    // Create an array to hold the area data
+    // Create an array to hold the area data    
     const areas = [
-        { name: "Arte y Creatividad", average: (sliderValues.Artistic + sliderValues.Communication) / 2 },
-        { name: "Ciencias Sociales", average: (sliderValues.Interpersonal + sliderValues.Communication) / 2 },
-        { name: "Económica, Administrativa y Financiera", average: sliderValues.Managerial },
-        { name: "Ciencia y Tecnología", average: (sliderValues.Mathematics + sliderValues.Mechanical + sliderValues.Science) / 3 },
-        { name: "Ciencias Ecológicas, Biológicas y de Salud", average: (sliderValues.Science + sliderValues.Interpersonal) / 2 }
+        { name: "Arte y Creatividad", average: (parseInt(sliderValues.Artistic) + parseInt(sliderValues.Communication)) / 2 },
+        { name: "Ciencias Sociales", average: (parseInt(sliderValues.Interpersonal) + parseInt(sliderValues.Communication)) / 2 },
+        { name: "Económica, Administrativa y Financiera", average: parseInt(sliderValues.Managerial) },
+        { name: "Ciencia y Tecnología", average: (parseInt(sliderValues.Mathematics) + parseInt(sliderValues.Mechanical) + parseInt(sliderValues.Science)) / 3 },
+        { name: "Ciencias Ecológicas, Biológicas y de Salud", average: (parseInt(sliderValues.Science) + parseInt(sliderValues.Interpersonal)) / 2 }
     ];
-
     return { areas };
 };
 
@@ -43,7 +42,7 @@ const handleContinue = (event) => {
 
 <template>
     <div class="max-w-screen-lg mx-auto p-5">
-        <a href="/test-vocacional/registro" class="flex items-center gap-1 mb-8 ">
+        <a href="/test-vocacional/registro" class="flex items-center gap-1 mb-8 px-4">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-6 fill-neutral-950">
                 <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path>
             </svg>
