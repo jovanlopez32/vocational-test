@@ -1,37 +1,30 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { Mistral } from "@mistralai/mistralai";
 import areasData from '../../assets/data/areasdata.json';
 import questionsData from '../../assets/data/questionsdata.json';
 
-/* consts */
 const resultPrediction = ref('');
 const resultPersonality = ref('');
 const resultTest = ref('');
 const userData = ref('');
-
 const userMessages = ref([]);
 const assistantMessages = ref([]);
-/* [
-            {
-               role: 'user',
-               content: petition.value
-           },
-           {
-               role: 'user',
-               content: petition.value
-           },
-           {
-               role: 'user',
-               content: petition.value
-           },
-           {
-               role: 'user',
-               content: petition.value
-           },
-] */
+const streamText = ref('');
+const petition = ref('');
+const open = ref(false);
 
- const systemContent = 'Eres Prisma, una IA experta en orientación vocacional con acceso a estos resultados: RESULTADOS_TEST: ' + JSON.stringify(resultTest.value) + ' RESULTADOS_PERSONALIDAD: ' + JSON.stringify(resultPersonality.value) + ' PREDICCIONES: ' + JSON.stringify(resultPrediction.value) + ' PREGUNTAS_RESPONDIDAS: ' + JSON.stringify(questionsData) + ' MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional'
+// System content construction
+const systemContent = ref('');
+
+// Watchers to store messages in localStorage when they change
+watch(userMessages, (newValue) => {
+    localStorage.setItem('userMessages', JSON.stringify(newValue));
+}, { deep: true });
+
+watch(assistantMessages, (newValue) => {
+    localStorage.setItem('assistantMessages', JSON.stringify(newValue));
+}, { deep: true });
 
 onMounted(() => {
     resultPrediction.value = localStorage.getItem('results');
@@ -39,71 +32,69 @@ onMounted(() => {
     resultTest.value = localStorage.getItem('areaResults');
     userData.value = localStorage.getItem('userData');
 
+    // Construct the system content using local storage values
+    systemContent.value = `Eres Prisma, una IA experta en orientación vocacional capaz de seguir una conversación con el usuario con acceso a estos resultados: RESULTADOS_TEST: ${JSON.stringify(resultTest.value)} RESULTADOS_PERSONALIDAD: ${JSON.stringify(resultPersonality.value)} PREDICCIONES: ${JSON.stringify(resultPrediction.value)} PREGUNTAS_RESPONDIDAS: ${JSON.stringify(questionsData)} MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional.`;
+
     // Open the modal and set it to close after 5 seconds
+    run()
     open.value = true;
     setTimeout(() => {
         open.value = false;
     }, 0); // Close modal after 5000 milliseconds (5 seconds)
-
 });
 
 const mistral = new Mistral({
   apiKey: "tLStop8yeeMECtb0G4Y8tfXXRCjPLvRp",
 });
 
-const streamText = ref('');
-
-const petition = ref('');
-
 async function run() {
     streamText.value = '';
-    
-    // Guardar mensaje del usuario
-    userMessages.value.push(petition.value);
-    
-    const result = await mistral.chat.stream({
-        model: "open-mistral-7b",
-        messages: [
-            {
-                role: 'system',
-                content: systemContent
-            },
-           {
-               role: 'user',
-               content: petition.value
-           },
-           {
-               role: 'assistant',
-               content: '...'
-           },
-           {
-               role: 'user',
-               content: petition.value
-           },
 
-        ]
-           
+    // Save the user's petition (message)
+    userMessages.value.push(petition.value); // Store user message
+
+    // Construct the message JSON array
+    const messages = [
+        { role: 'system', content: systemContent.value },
+    ];
+
+    // Append previous user and assistant messages alternately
+    userMessages.value.forEach((msg, index) => {
+        messages.push({ role: 'user', content: msg });
+        if (assistantMessages.value[index]) {
+            messages.push({ role: 'assistant', content: assistantMessages.value[index] });
+        }
     });
 
-    let currentResponse = '';
-    
-    for await (const chunk of result) {
-        const content = chunk.data.choices[0].delta.content;
-        currentResponse += content;
-        streamText.value += content;
+    // Debugging: Log constructed messages
+    console.log("Constructed Messages:", JSON.stringify(messages, null, 2));
+
+    try {
+        const result = await mistral.chat.stream({
+            model: "open-mistral-7b",
+            messages: messages
+        });
+
+        let currentResponse = '';
+        for await (const chunk of result) {
+            const content = chunk.data.choices[0].delta.content;
+            currentResponse += content;
+            streamText.value += content;
+        }
+
+        // Save the assistant's response
+        assistantMessages.value.push(currentResponse); // Store assistant response
+    } catch (error) {
+        console.error('Error fetching response:', error);
+        assistantMessages.value.push('Sorry, something went wrong. Please try again later. 😔');
     }
-    
-    // Guardar respuesta del asistente
-    assistantMessages.value.push(currentResponse);
-    
+
+    // Clear the petition input
     petition.value = '';
 }
 
-const open = ref(false); 
-
-
-
 </script>
+
 <template>
     <div class="grid grid-cols-7 grid-rows-7 gap-5 w-full min-h-screen absolute left-0 top-0 p-5 box-border">
         <div class="col-span-2 row-span-7 rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding">
