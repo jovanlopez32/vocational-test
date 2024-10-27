@@ -33,7 +33,7 @@ onMounted(() => {
     userData.value = localStorage.getItem('userData');
 
     // Construct the system content using local storage values
-    systemContent.value = `Eres Prisma, una IA experta en orientación vocacional capaz de seguir una conversación con el usuario con acceso a estos resultados: RESULTADOS_TEST: ${JSON.stringify(resultTest.value)} RESULTADOS_PERSONALIDAD: ${JSON.stringify(resultPersonality.value)} PREDICCIONES: ${JSON.stringify(resultPrediction.value)} PREGUNTAS_RESPONDIDAS: ${JSON.stringify(questionsData)} MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional.`;
+    systemContent.value = `Eres Prisma, una IA experta en orientación vocacional capaz de seguir una conversación con el usuario con acceso a estos resultados: RESULTADOS_TEST: ${JSON.stringify(resultTest.value)} RESULTADOS_PERSONALIDAD: ${JSON.stringify(resultPersonality.value)} PREDICCIONES: ${JSON.stringify(resultPrediction.value)} PREGUNTAS_RESPONDIDAS: ${JSON.stringify(questionsData)} MÉTODO DE ANÁLISIS: 1. Analiza la pregunta del usuario 2. Revisa los datos relevantes en los resultados 3. Compara patrones entre áreas y personalidad 4. Formula una respuesta estructurada 5. Añade un toque empático y emoji relevante REGLAS: - Piensa paso a paso antes de responder - Usa siempre datos concretos de los resultados - Incluye al menos un emoji por respuesta - Mantén un tono profesional pero cercano - Solo habla sobre orientación vocacional - Si no tienes suficiente información, comunícalo - No inventes datos o estadísticas FORMATO DE RESPUESTA: 1. Saludo empático 2. Análisis basado en datos 3. Recomendación específica 4. Conclusión motivacional. Dame respuestas cortas`;
 
     // Open the modal and set it to close after 5 seconds
     run()
@@ -71,7 +71,7 @@ async function run() {
 
     try {
         const result = await mistral.chat.stream({
-            model: "open-mistral-7b",
+            model: "open-mixtral-8x7b",
             messages: messages
         });
 
@@ -159,7 +159,6 @@ async function run() {
                     {{ streamText }}
                 </div>
             </div>
-            
             <div class="flex gap-4">
                 <input placeholder="Your petition" v-model="petition" type="text" class="px-4 py-3 w-full rounded-2xl border border-solid border-black p-5 bg-neutral-50/80 saturate-100 backdrop-filter backdrop-contrast-100 backdrop-blur-[8px] bg-clip-padding ">
                 <button @click="run()" class="relative p-[3px] inline-flex items-center justify-center font-bold overflow-hidden group rounded-full">
@@ -170,9 +169,6 @@ async function run() {
                 </button>
             </div>
         </div>
-
-        <div class="col-span-2 col-start-4 row-start-7">4</div>
-        <div class="col-span-2 col-start-6 row-start-7">5</div>
     </div>
 
     <div class="absolute -top-20 left-0 translate-x-1/4 w-96 h-80 bg-rose-400/40 rounded-full blur-3xl rotate-9 mix-blend-multiply -z-10"></div>
